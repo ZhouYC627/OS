@@ -19,6 +19,7 @@ os.img:
 
 play: os.img
 	$(QEMU) -serial stdio os.img
+	git commit -am "play"
 
 debug: os.img
 	$(QEMU) -serial stdio -s -S os.img
