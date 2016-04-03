@@ -101,4 +101,8 @@ lldt(uint16_t sel)
 	asm volatile("lldt %0" :: "r"(sel));
 }
 
+static inline void
+ltr(uint16_t sel) {
+	asm volatile("ltr %0" : :"r"(sel)); 
+}
 #endif
