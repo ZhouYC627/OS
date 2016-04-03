@@ -18,11 +18,11 @@ void bootmain(void)
 	struct ProgramHeader *ph;
 
 	int i=0;
-	char s[]="Loading";
+	//char s[]="Loading";
 	//char s1[]="...";
 	// print "Loading..."
-	//int s[4] = {0x64616f4c, 0x2e676e69, 0x00002e2e};
-	print_s(s, 4);
+	int s[4] = {0x64616f4c, 0x2e676e69, 0x00002e2e};
+	print_s((int *)s, 4);
 	//print_s(s1, 3, 4);
 	/*for (; i<10; i++){
 		int *p = (void *)V_ADDR + (80*4+i)*2;
@@ -53,12 +53,12 @@ void bootmain(void)
 	//int s1[4] = { 0x63657845, 0x6e697475, 0x2e2e2e67};
 	//s[0] = 0x63657845;
 	//s[1] = 0x00657475;
-	char s2[]="Back to boot.";
-	print_s(s2, 11);
-	/*s[0] = 0x6b636142;
+	//char s2[]="Back to boot.";
+	//print_s(s2, 11);
+	s[0] = 0x6b636142;
 	s[1] = 0x206f7420;
 	s[2] = 0x746f6f42;
-	print_s(s, 11);*/
+	print_s((int *)s, 11);
 	((void(*)(void))elf->entry)();
 	while(1);
 }
