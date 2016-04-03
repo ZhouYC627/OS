@@ -51,15 +51,18 @@ void bootmain(void)
 	}
 	//print "Executing..."
 	//int s1[4] = { 0x63657845, 0x6e697475, 0x2e2e2e67};
+	/*
 	s[0] = 0x63657845;
 	s[1] = 0x00657475;
-	//char s2[]="Back to boot.";
 	print_s((char *)s, 5);
+	//char s2[]="Back to boot.";
+	*/
+	((void(*)(void))elf->entry)();
+
 	s[0] = 0x6b636142;
 	s[1] = 0x206f7420;
 	s[2] = 0x746f6f42;
 	print_s((char *)s, 11);
-	((void(*)(void))elf->entry)();
 	while(1);
 }
 
