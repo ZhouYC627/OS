@@ -10,7 +10,6 @@ kentry(void) {
 	init_idt();
 	init_intr();
 	init_seg();
-	assert(0);
 	load_umain();
 	enter_user_space();
 	while(1);
