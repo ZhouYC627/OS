@@ -54,7 +54,7 @@ void bootmain(void)
 	//s[0] = 0x63657845;
 	//s[1] = 0x00657475;
 	char s2[]="Back to boot.";
-	print_s(s, 5);
+	print_s(s2, 11);
 	/*s[0] = 0x6b636142;
 	s[1] = 0x206f7420;
 	s[2] = 0x746f6f42;
