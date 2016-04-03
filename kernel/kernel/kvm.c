@@ -21,8 +21,10 @@ init_seg() { // setup kernel segements
 	 */
 	tss.ss0 = KSEL(SEG_KDATA);
 	int esp = 0;
-	asm volatile("mov %%esp, %0" : "=r"(esp));
+	asm volatile("movl %%esp, %0" : "=r"(esp));
 	tss.esp0 = esp;
+	asm volatile("ltr %0" : : "r"(USEL(SEG_TSS)));
+
 	/*设置正确的段寄存器*/
 	asm volatile("movw %%ax,%%es":: "a" (KSEL(SEG_KDATA)));
 	asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
