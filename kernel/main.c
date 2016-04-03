@@ -6,7 +6,7 @@ extern void enter_user_space(void);
 
 void
 kentry(void) {
-	while(1);
+	assert(0);
 	init_serial();			//初始化串口输出
 	init_idt();
 	init_intr();
