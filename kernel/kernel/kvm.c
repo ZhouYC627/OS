@@ -46,7 +46,7 @@ enter_user_space(void) {
      asm volatile("pushw %%ax" :: "a"(USEL(SEG_UDATA))); //ss
 	 asm volatile("pushl %%eax" :: "a"(0x200000));	//esp
 	 asm volatile("pushfl");	//eflags;
-	 asm volatile("pushw %%ax" :: "a" (USEL(SEG_UCODE))); //cs
+	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
 	 asm volatile("pushl %%eax" :: "a" (eip));	//eip
 	 asm volatile("iret");
 	 //assert(0);
@@ -63,7 +63,7 @@ load_umain(void) {
      */
      struct ELFHeader *elf;
      struct ProgramHeader *ph, *eph;
-     unsigned char* pa, *i;
+     unsigned char* pa;
      
      elf = (struct ELFHeader*)0x8000;
      read_seg((unsigned char*)elf, 201*SECTSIZE, 4096);
@@ -75,7 +75,7 @@ load_umain(void) {
 		     //ph = (void*)(elf + elf->phoff + elf->phentsize);
 		     pa = (unsigned char*)(ph->paddr) + 0x200000;
 		     read_seg(pa, 201*SECTSIZE + ph->off, ph->filesz);
-		     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
+		     //for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
      }
      //((void(*)(void))elf->entry)();
      //gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
