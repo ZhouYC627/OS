@@ -72,6 +72,7 @@ load_umain(void) {
      //eph = ph + elf->phnum;
 
 	 int i;
+	 assert(0);
      for (i=0; i<elf->phnum; i++){
 		     ph = (void*)(elf + elf->phoff + elf->phentsize*i);
 		     //pa = (unsigned char*)(ph->paddr + 0x200000);
@@ -83,7 +84,6 @@ load_umain(void) {
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
 	 //gdt[SEG_UCODE].dpl = 3;
 	 //gdt[SEG_UDATA].dpl = 3;
-	 assert(0);
 
      return(elf->entry);
 
