@@ -7,6 +7,6 @@
 #include "x86/irq.h"
 
 void init_seg(void);
-void load_umain(void);
+uint32_t load_umain(void);
 
 #endif

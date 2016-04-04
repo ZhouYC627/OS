@@ -2,7 +2,7 @@
 #include "x86.h"
 #include "device.h"
 
-extern void enter_user_space(void);
+extern void enter_user_space(uint32_t);
 
 void
 kentry(void) {
@@ -10,8 +10,8 @@ kentry(void) {
 	init_idt();
 	init_intr();
 	init_seg();
-	load_umain();
-	enter_user_space();
+	uint32_t entry = load_umain();
+	enter_user_space(entry);
 	//assert(0);
 	while(1);
 	assert(0);

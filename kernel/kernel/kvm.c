@@ -5,7 +5,7 @@
 
 SegDesc gdt[NR_SEGMENTS];       // the new GDT
 TSS tss;
-static uint32_t eip = 0;
+//static uint32_t eip = 0;
 void
 init_seg() { // setup kernel segements
 	gdt[SEG_KCODE] = SEG(STA_X | STA_R, 0,       0xffffffff, DPL_KERN);
@@ -36,7 +36,7 @@ init_seg() { // setup kernel segements
 }
 
 void
-enter_user_space(void) {
+enter_user_space(uint32_t entry) {
     /*
      * Before enter user space 
      * you should set the right segment registers here
@@ -48,7 +48,7 @@ enter_user_space(void) {
 	 asm volatile("pushl %%eax" :: "a" (0x200000));	//esp
 	 asm volatile("pushfl");	//eflags;
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
-	 asm volatile("pushl %%eax" :: "a" (eip));	//eip
+	 asm volatile("pushl %%eax" :: "a" (entry));	//eip
 	 asm volatile("iret");
 	 //assert(0);
 
@@ -56,7 +56,7 @@ enter_user_space(void) {
 }
 
 void read_seg(unsigned char *buf, int offset, int len);
-void
+uint32_t
 load_umain(void) {
     /*
      * Load your app here
@@ -81,7 +81,8 @@ load_umain(void) {
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
-     eip = elf->entry;
+
+     return(elf->entry);
 
 
 }
