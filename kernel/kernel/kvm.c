@@ -19,7 +19,7 @@ init_seg() { // setup kernel segements
 	/*
 	 * 初始化TSS
 	 */
-	tss.ss0 = KSEL(SEG_KDATA);
+	tss.ss0 = KSEL(SEG_TSS);
 	int esp = 0;
 	asm volatile("movl %%esp, %0" : "=r"(esp));
 	//tss.esp0 = esp;
