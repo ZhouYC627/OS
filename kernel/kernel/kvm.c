@@ -43,7 +43,7 @@ enter_user_space(void) {
      * and use 'iret' to jump to ring3
      * 进入用户空间
      */
-     asm volatile("pushw %%ax" :: "a"(USEL(SEG_UDATA))); //ss
+     asm volatile("pushl %%eax" :: "a"(USEL(SEG_UDATA))); //ss
 	 asm volatile("pushl %%eax" :: "a"(0x200000));	//esp
 	 asm volatile("pushfl");	//eflags;
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
