@@ -63,20 +63,20 @@ load_umain(void) {
      */
      struct ELFHeader *elf;
      struct ProgramHeader *ph, *eph;
-     unsigned char* pa;
+     unsigned char* pa, *i;
 	 uint8_t buf[4096];
      
      elf = (struct ELFHeader*)buf;
      read_seg((unsigned char*)elf, 201*SECTSIZE, 4096);
-     
+     assert(0); 
      ph = (struct ProgramHeader*)((char *)elf + elf->phoff);
      eph = ph + elf->phnum;
 
      for (; ph<eph; ph++){
 		     //ph = (void*)(elf + elf->phoff + elf->phentsize);
-		     pa = (unsigned char*)(ph->paddr) + 0x200000;
+		     pa = (unsigned char*)(ph->paddr + 0x200000);
 		     read_seg(pa, 201*SECTSIZE + ph->off, ph->filesz);
-		     //for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
+		     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
      }
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
