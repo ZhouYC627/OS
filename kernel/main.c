@@ -12,7 +12,8 @@ kentry(void) {
 	init_intr();
 	init_seg();
 	uint32_t entry = load_umain();
-	print_d((double)entry,15);
+	//print_d((double)entry,15);
+	entry = 0;
 	enter_user_space(entry);
 	while(1);
 }
