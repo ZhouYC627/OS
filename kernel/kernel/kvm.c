@@ -72,13 +72,13 @@ load_umain(void) {
      //eph = ph + elf->phnum;
 
 	 int i;
-	 assert(0);
      for (i=0; i<elf->phnum; i++){
 		     ph = (void*)(elf + elf->phoff + elf->phentsize*i);
 		     //pa = (unsigned char*)(ph->paddr + 0x200000);
 		     read_seg((void*)ph->paddr + 0x200000, 200*SECTSIZE + ph->off, ph->filesz);
 		     //for (i=ph->addr+0x200000+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
      }
+	 assert(0);
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
