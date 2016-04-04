@@ -68,7 +68,6 @@ load_umain(void) {
      
      elf = (struct ELFHeader*)buf;
      read_seg((unsigned char*)elf, 201*SECTSIZE, 4096);
-     assert(0); 
      ph = (struct ProgramHeader*)((char *)elf + elf->phoff);
      eph = ph + elf->phnum;
 
@@ -79,6 +78,7 @@ load_umain(void) {
 		     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
      }
      //((void(*)(void))elf->entry)();
+     assert(0); 
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
 	 gdt[SEG_UCODE].dpl = 3;
