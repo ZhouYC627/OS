@@ -50,7 +50,7 @@ enter_user_space(uint32_t entry) {
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
 	 asm volatile("pushl %%eax" :: "a" (entry));	//eip
 	 asm volatile("iret");
-	 //assert(0);
+	 assert(0);
 
 
 }
