@@ -46,6 +46,7 @@ enter_user_space(uint32_t entry) {
 	 asm volatile("movw %%ax,%%ds" :: "a" (USEL(SEG_UDATA)));
      asm volatile("pushl %%eax" :: "a"(USEL(SEG_UDATA))); //ss
 	 asm volatile("pushl %%eax" :: "a" (0x400000));	//esp
+	 assert(0);
 	 asm volatile("pushfl");	//eflags;
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
 	 asm volatile("pushl %%eax" :: "a" (entry));	//eip
