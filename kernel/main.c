@@ -10,8 +10,8 @@ kentry(void) {
 	init_idt();
 	init_intr();
 	init_seg();
-	assert(0);
 	load_umain();
+	assert(0);
 	enter_user_space();
 	while(1);
 	assert(0);
