@@ -80,7 +80,6 @@ load_umain(void) {
 					 //for (i=ph->addr+0x200000+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
 			 }
      }
-	 assert(0);
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
