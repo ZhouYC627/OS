@@ -12,8 +12,6 @@ kentry(void) {
 	init_intr();
 	init_seg();
 	uint32_t entry = load_umain();
-	assert(entry==0);
 	enter_user_space(entry);
-	assert(0);
 	while(1);
 }
