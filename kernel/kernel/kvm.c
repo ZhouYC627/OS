@@ -67,7 +67,7 @@ load_umain(void) {
 	 //uint8_t buf[4096];
      
      elf = (struct ELFHeader*)0x8000;
-     read_seg((unsigned char*)elf, 201*SECTSIZE, 4096);
+     read_seg((unsigned char*)elf, 200*SECTSIZE, 4096);
      //ph = (struct ProgramHeader*)((unsigned char *)elf + elf->phoff);
      //eph = ph + elf->phnum;
 
@@ -75,7 +75,7 @@ load_umain(void) {
      for (i=0; i<elf->phnum; i++){
 		     ph = (void*)(elf + elf->phoff + elf->phentsize*i);
 		     //pa = (unsigned char*)(ph->paddr + 0x200000);
-		     read_seg((void*)ph->paddr + 0x200000, 201*SECTSIZE + ph->off, ph->filesz);
+		     read_seg((void*)ph->paddr + 0x200000, 200*SECTSIZE + ph->off, ph->filesz);
 		     //for (i=ph->addr+0x200000+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
      }
      //((void(*)(void))elf->entry)();
