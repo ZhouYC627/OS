@@ -81,6 +81,8 @@ load_umain(void) {
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
+	 gdt[SEG_UCODE].dpl = 3;
+	 gdt[SEG_UDATA].dpl = 3;
 
      return(elf->entry);
 
