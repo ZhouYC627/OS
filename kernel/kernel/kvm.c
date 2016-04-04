@@ -5,7 +5,7 @@
 
 SegDesc gdt[NR_SEGMENTS];       // the new GDT
 TSS tss;
-static int eip;
+static uint32_t eip = 0;
 void
 init_seg() { // setup kernel segements
 	gdt[SEG_KCODE] = SEG(STA_X | STA_R, 0,       0xffffffff, DPL_KERN);
