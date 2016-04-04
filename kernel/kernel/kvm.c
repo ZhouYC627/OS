@@ -44,12 +44,31 @@ enter_user_space(void) {
      */
 }
 
+void read_seg(unsigned char *buf, int offset, int len);
 void
 load_umain(void) {
     /*
      * Load your app here
      * 加载用户程序
      */
+     struct ELFHeader *elf;
+     struct ProgramHeader *ph, *eph;
+     unsigned char* pa, *i;
+     
+     elf = (struct ELFHeader*)0x8000;
+     read_seg((unsigned char*)elf, 200*SECTSIZE, 4096);
+     
+     ph = (struct ProgramHeader*)((char *)elf + elf->phoff);
+     eph = ph + elf->phnum;
+
+     for (; ph<eph; ph++){
+	     //ph = (void*)(elf + elf->phoff + elf->phentsize);
+	     pa = (unsigned char*)(ph->paddr);
+	     read_seg(pa, ph->off, ph->filesz);
+	     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
+     }
+     ((void(*)(void))elf->entry)();
+
 }
 
 void
@@ -71,5 +90,14 @@ readsect(void *dst, int offset) {
 	waitdisk();
 	for (i = 0; i < SECTSIZE / 4; i ++) {
 		((int *)dst)[i] = in_long(0x1F0);
+	}
+}
+
+void read_seg(unsigned char *buf, int offset, int len){
+	int se = offset / SECTSIZE + 1;
+	unsigned char *temp = buf + offset;
+	buf -= offset % SECTSIZE;
+	for (; buf <=temp; buf += SECTSIZE, se++){
+		readsect(buf , se);
 	}
 }
