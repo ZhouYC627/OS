@@ -83,6 +83,7 @@ load_umain(void) {
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
 	 //gdt[SEG_UCODE].dpl = 3;
 	 //gdt[SEG_UDATA].dpl = 3;
+	 assert(0);
 
      return(elf->entry);
 
