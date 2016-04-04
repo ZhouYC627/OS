@@ -42,6 +42,7 @@ enter_user_space(void) {
      * and use 'iret' to jump to ring3
      * 进入用户空间
      */
+
 }
 
 void read_seg(unsigned char *buf, int offset, int len);
@@ -63,11 +64,14 @@ load_umain(void) {
 
      for (; ph<eph; ph++){
 	     //ph = (void*)(elf + elf->phoff + elf->phentsize);
-	     pa = (unsigned char*)(ph->paddr);
+	     pa = (unsigned char*)(ph->paddr) + 0x200000;
 	     read_seg(pa, ph->off, ph->filesz);
 	     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
      }
-     ((void(*)(void))elf->entry)();
+     //((void(*)(void))elf->entry)();
+     gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
+     gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
+     eip = elf->entry;
 
 }
 
