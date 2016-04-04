@@ -12,7 +12,7 @@ kentry(void) {
 	init_intr();
 	init_seg();
 	uint32_t entry = load_umain();
-	assert(entry!=0);
+	assert(entry==0);
 	//print_d((double)entry,15);
 	enter_user_space(entry);
 	//assert(0);
