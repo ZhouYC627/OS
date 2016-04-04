@@ -1,6 +1,7 @@
 #include "common.h"
 #include "x86.h"
 #include "device.h"
+#include "lib.h"
 
 extern void enter_user_space(uint32_t);
 
@@ -11,6 +12,7 @@ kentry(void) {
 	init_intr();
 	init_seg();
 	uint32_t entry = load_umain();
+	print_d((double)entry,15);
 	enter_user_space(entry);
 	//assert(0);
 	while(1);
