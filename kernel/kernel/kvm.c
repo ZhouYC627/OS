@@ -19,7 +19,7 @@ init_seg() { // setup kernel segements
 	/*
 	 * 初始化TSS
 	 */
-	tss.ss0 = KSEL(SEG_TSS);
+	tss.ss0 = KSEL(SEG_KDATA);
 	int esp = 0;
 	asm volatile("movl %%esp, %0" : "=r"(esp));
 	//tss.esp0 = esp;
@@ -72,12 +72,10 @@ load_umain(void) {
      eph = ph + elf->phnum;
 
      for (; ph<eph; ph++){
-	     if (ph->type==1){
 		     //ph = (void*)(elf + elf->phoff + elf->phentsize);
 		     pa = (unsigned char*)(ph->paddr) + 0x200000;
 		     read_seg(pa, ph->off, ph->filesz);
 		     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
-	     }
      }
      //((void(*)(void))elf->entry)();
      //gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
