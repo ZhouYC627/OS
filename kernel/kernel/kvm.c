@@ -50,7 +50,6 @@ enter_user_space(uint32_t entry) {
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
 	 asm volatile("pushl %%eax" :: "a" (entry));	//eip
 	 asm volatile("iret");
-	 assert(0);
 
 
 }
@@ -65,8 +64,9 @@ load_umain(void) {
      struct ELFHeader *elf;
      struct ProgramHeader *ph, *eph;
      unsigned char* pa;
+	 uint8_t buf[4096];
      
-     elf = (struct ELFHeader*)0x8000;
+     elf = (struct ELFHeader*)buf;
      read_seg((unsigned char*)elf, 201*SECTSIZE, 4096);
      
      ph = (struct ProgramHeader*)((char *)elf + elf->phoff);
