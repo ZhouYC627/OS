@@ -24,14 +24,14 @@ init_seg() { // setup kernel segements
 	//asm volatile("movl %%esp, %0" : "=r"(esp));
 	//tss.esp0 = esp;
 	tss.esp0 = 0x180000;
-	//asm volatile("ltr %0" : : "r"(USEL(SEG_TSS)));
+	//asm volatile("ltr %0" : : "r"(KSEL(SEG_TSS)));
+	ltr(KSEL(SEG_TSS));
 
 	/*设置正确的段寄存器*/
 	asm volatile("movw %%ax,%%es":: "a" (KSEL(SEG_KDATA)));
 	asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
 	asm volatile("movw %%ax,%%ss":: "a" (KSEL(SEG_KDATA)));
 
-	ltr(KSEL(SEG_TSS));
 	lldt(0);
 }
 
@@ -68,7 +68,7 @@ load_umain(void) {
      
      elf = (struct ELFHeader*)0x8000;
      read_seg((unsigned char*)elf, 200*SECTSIZE, 4096);
-     ph = (struct ProgramHeader*)((char *)elf + elf->phoff);
+     ph = (struct ProgramHeader*)((unsigned char *)elf + elf->phoff);
      eph = ph + elf->phnum;
 
      for (; ph<eph; ph++){
@@ -80,8 +80,8 @@ load_umain(void) {
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
-	 gdt[SEG_UCODE].dpl = 3;
-	 gdt[SEG_UDATA].dpl = 3;
+	 //gdt[SEG_UCODE].dpl = 3;
+	 //gdt[SEG_UDATA].dpl = 3;
 
      return(elf->entry);
 
