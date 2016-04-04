@@ -5,13 +5,13 @@
 
 SegDesc gdt[NR_SEGMENTS];       // the new GDT
 TSS tss;
-
+static int eip;
 void
 init_seg() { // setup kernel segements
 	gdt[SEG_KCODE] = SEG(STA_X | STA_R, 0,       0xffffffff, DPL_KERN);
 	gdt[SEG_KDATA] = SEG(STA_W,         0,       0xffffffff, DPL_KERN);
-	gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0,       0xffffffff, DPL_USER);
-	gdt[SEG_UDATA] = SEG(STA_W,         0,       0xffffffff, DPL_USER);
+	gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000,       0xffffffff, DPL_USER);
+	gdt[SEG_UDATA] = SEG(STA_W,         0x200000,       0xffffffff, DPL_USER);
 	gdt[SEG_TSS] = SEG16(STS_T32A,      &tss, sizeof(TSS)-1, DPL_KERN);
     gdt[SEG_TSS].s = 0;
 	set_gdt(gdt, sizeof(gdt));
@@ -42,6 +42,13 @@ enter_user_space(void) {
      * and use 'iret' to jump to ring3
      * 进入用户空间
      */
+     asm volatile("pushw %%ax" :: "a"(USEL(SEG_UCODE))); //ss
+	 asm volatile("pushl %%eax" :: "a"(0x200000));	//esp
+	 asm volatile("pushfl");	//eflags;
+	 asm volatile("pushw %%ax" :: "a" (USEL(SEG_UCODE))); //cs
+	 asm volatile("pushl %%eax" :: "a" (eip));	//eip
+	 asm volatile("iret");
+
 
 }
 
@@ -63,14 +70,16 @@ load_umain(void) {
      eph = ph + elf->phnum;
 
      for (; ph<eph; ph++){
-	     //ph = (void*)(elf + elf->phoff + elf->phentsize);
-	     pa = (unsigned char*)(ph->paddr) + 0x200000;
-	     read_seg(pa, ph->off, ph->filesz);
-	     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
+	     if (ph->type==1){
+		     //ph = (void*)(elf + elf->phoff + elf->phentsize);
+		     pa = (unsigned char*)(ph->paddr) + 0x200000;
+		     read_seg(pa, ph->off, ph->filesz);
+		     for (i=pa+ph->filesz; i<pa+ph->memsz; *i ++ = 0);
+	     }
      }
      //((void(*)(void))elf->entry)();
-     gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
-     gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
+     //gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
+     //gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
      eip = elf->entry;
 
 }

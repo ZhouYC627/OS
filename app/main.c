@@ -2,5 +2,6 @@
 
 void
 uentry(void){
-    while(1);
+	//assert(0);
+	while(1);
 }
