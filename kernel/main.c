@@ -12,7 +12,7 @@ kentry(void) {
 	init_seg();
 	load_umain();
 	enter_user_space();
-	assert(0);
+	//assert(0);
 	while(1);
 	assert(0);
 }
