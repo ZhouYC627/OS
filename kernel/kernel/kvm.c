@@ -23,7 +23,7 @@ init_seg() { // setup kernel segements
 	int esp = 0;
 	asm volatile("movl %%esp, %0" : "=r"(esp));
 	//tss.esp0 = esp;
-	tss.esp0 = 0x1fffff;
+	tss.esp0 = 0x180000;
 	//asm volatile("ltr %0" : : "r"(USEL(SEG_TSS)));
 
 	/*设置正确的段寄存器*/
@@ -46,7 +46,6 @@ enter_user_space(uint32_t entry) {
 	 asm volatile("movw %%ax,%%ds" :: "a" (USEL(SEG_UDATA)));
      asm volatile("pushl %%eax" :: "a"(USEL(SEG_UDATA))); //ss
 	 asm volatile("pushl %%eax" :: "a" (0x400000));	//esp
-	 assert(0);
 	 asm volatile("pushfl");	//eflags;
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
 	 asm volatile("pushl %%eax" :: "a" (entry));	//eip
