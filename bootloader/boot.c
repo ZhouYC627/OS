@@ -40,13 +40,17 @@ void bootmain(void)
 		ph = (void*)elf + elf->phoff+(elf->phentsize) * i;
 		//paddr = (void*)ph->paddr;
 		/* read the content of the segment from the ELF file to the memory region ( 0x8000 ) */
-		ramdisk_read((void *)ph->paddr, ph->off, ph->filesz);
+		if (ph->type==1){
+			ramdisk_read((void *)ph->paddr, ph->off, ph->filesz);
 		/* zero the memory region */
 		//memset((void *)paddr + ph->filesz, 0, ph->memsz - ph->filesz);
-		/*int j;
-		for (j = ph->filesz; j< ph->memsz; j++){
-			*(paddr+j) = 0;
-		}*/
+		/*
+			int j;
+			for (j = ph->filesz; j< ph->memsz; j++){
+				*((unsigned char*)ph->paddr+j) = 0;
+			}
+		*/
+		}
 		//ph+=elf->phentsize;
 	}
 	//print "Executing..."
