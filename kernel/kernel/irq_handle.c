@@ -30,7 +30,7 @@ int sys_write(int fd, void *buf, int len) {
 	if ((fd==1) || (fd==2)){
 		int i;
 		for (i=0; i<len; i++){
-			ch = ((char*)buf)[i];
+			ch = ((char*)buf+UADDR)[i];
 			putchar(ch);
 		}
 	}

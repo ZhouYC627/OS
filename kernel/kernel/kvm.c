@@ -76,8 +76,8 @@ load_umain(void) {
 			 //ph = (void*)(elf + elf->phoff + elf->phentsize*i);
 			 if (ph->type==1){
 					 //pa = (unsigned char*)(ph->paddr + 0x200000);
-					 read_seg((unsigned char*)ph->paddr + 0x200000, 200*SECTSIZE + ph->off, ph->filesz);
-					 for (c=(unsigned char*)ph->paddr+0x200000+ph->filesz; c<(unsigned char*)ph->paddr+ph->memsz+0x200000;c++) *c=0;
+					 read_seg((unsigned char*)ph->paddr + UADDR, 200*SECTSIZE + ph->off, ph->filesz);
+					 for (c=(unsigned char*)ph->paddr+UADDR+ph->filesz; c<(unsigned char*)ph->paddr+ph->memsz+UADDR;c++) *c=0;
 			 }
 			 ph++;
      }
