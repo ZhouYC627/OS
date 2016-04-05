@@ -27,7 +27,6 @@ add_irq_handle(int irq, void (*func)(void) ){
 
 char ch;
 int sys_write(int fd, void *buf, int len) {
-		assert(0);
 	if ((fd==1) || (fd==2)){
 		assert(0);
 		int i;
