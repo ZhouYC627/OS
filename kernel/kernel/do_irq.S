@@ -39,6 +39,6 @@ asm_do_irq:
 	addl $4, %esp
         
 	popal
-	addl $4, %esp
+	addl $8, %esp
 	
 	iret
