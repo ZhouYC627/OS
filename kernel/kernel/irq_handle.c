@@ -61,6 +61,7 @@ irq_handle(struct TrapFrame *tf) {
     /*
      * 中断处理程序
      */
+	 assert(0);
     int irq = tf->irq;
     switch(irq) {
         case 1000:break;
