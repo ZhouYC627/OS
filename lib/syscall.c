@@ -41,9 +41,7 @@ int printf(const char *format,...){
 	static char buf[256];
 	void *args = (void**)&format + 1;
 	int len = vsnprintf(buf, 256, format, args);
-	len=0;
 	return syscall(4, 1, (uint32_t)buf, len);
-	return 0;
 	
 } 
 
