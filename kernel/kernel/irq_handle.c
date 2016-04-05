@@ -28,7 +28,6 @@ add_irq_handle(int irq, void (*func)(void) ){
 char ch;
 int sys_write(int fd, void *buf, int len) {
 	if ((fd==1) || (fd==2)){
-		assert(0);
 		int i;
 		for (i=0; i<len; i++){
 			ch = ((char*)buf+UADDR)[i];
