@@ -50,6 +50,7 @@ void do_syscall(struct TrapFrame *tf){
 		
 		//case SYS_brk:  tf->eax = 0; break;
 		case 4:
+				assert(0);
 			tf->eax = sys_write(tf->ebx, (void*)tf->ecx, tf->edx);
 			break;
 		default: assert(0);
