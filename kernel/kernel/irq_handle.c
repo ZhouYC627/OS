@@ -27,6 +27,7 @@ add_irq_handle(int irq, void (*func)(void) ){
 
 char ch;
 int sys_write(int fd, void *buf, int len) {
+		assert(0);
 	if ((fd==1) || (fd==2)){
 		assert(0);
 		int i;
@@ -50,7 +51,6 @@ void do_syscall(struct TrapFrame *tf){
 		
 		//case SYS_brk:  tf->eax = 0; break;
 		case 4:
-				assert(0);
 			tf->eax = sys_write(tf->ebx, (void*)tf->ecx, tf->edx);
 			break;
 		default: assert(0);
