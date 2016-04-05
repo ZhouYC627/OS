@@ -40,7 +40,8 @@ int printf(const char *format,...){
 	static char buf[256];
 	void *args = (void**)&format + 1;
 	int len = vsnprintf(buf, 256, format, args);
-	return syscall(4, 1, buf, 1);
+	len=1;
+	return syscall(4, 1, buf, len);
 	
 } 
 
