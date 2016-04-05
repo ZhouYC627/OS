@@ -18,8 +18,8 @@ os.img:
 	cat bootloader/bootblock kernel/kmain app/umain > os.img
 
 play: os.img
-	git commit -am "play"
 	$(QEMU) -serial stdio os.img
+	git commit -am "play"
 
 debug: os.img
 	$(QEMU) -serial stdio -s -S os.img
