@@ -38,7 +38,6 @@ int sys_write(int fd, void *buf, int len) {
 }
 
 void do_syscall(struct TrapFrame *tf){
-		assert(0);
 	switch(tf->eax){
 		case 0:
 			//cli();
