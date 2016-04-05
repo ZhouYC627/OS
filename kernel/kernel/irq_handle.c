@@ -84,7 +84,8 @@ irq_handle(struct TrapFrame *tf) {
 	case 14:	break;
 	case 0x80:
 		do_syscall(tf);
-        default:assert(0);
+		break;
+   	default:assert(0);
     }
 	asm volatile("movw %%ax,%%ds":: "a" (USEL(SEG_UDATA)));
 }
