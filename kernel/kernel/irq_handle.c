@@ -26,11 +26,11 @@ add_irq_handle(int irq, void (*func)(void) ){
     handles[irq] = ptr;
 }
 
-static int row = 1;
+static int row = 2;
 static int column = 0;
 char ch;
 void scr_write(char c){
-	if (c == '\n'){
+	if (c == '\n' || column == 80){
 		row++;
 		column = 0;
 		return;
