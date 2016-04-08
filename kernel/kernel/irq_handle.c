@@ -36,13 +36,13 @@ void scr_write(char c){
 		return;
 	}
 	int *p = (void *)VED_ADDR + (80 * row + column)*2;
-	*p = 0x0f00 | c;
+	*p = 0x0000 | c;
 	column++;
 
 }
 void scr_clr(){
 	int i;
-	for (i=0; i<60*80; i++){
+	for (i=0; i<25*80; i++){
 		scr_write(' ');
 	}
 	row = 1;
