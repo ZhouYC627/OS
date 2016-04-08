@@ -26,7 +26,7 @@ add_irq_handle(int irq, void (*func)(void) ){
     handles[irq] = ptr;
 }
 
-int row = 0;
+int row = 1;
 int column = 1;
 char ch;
 void scr_write(char c){
@@ -46,7 +46,7 @@ void scr_clr(){
 		scr_write(' ');
 	}
 	row = 1;
-	column = 1;
+	column = 0;
 }
 int sys_write(int fd, void *buf, int len) {
 	if ((fd==1) || (fd==2)){
