@@ -3,5 +3,6 @@
 
 int vsnprintf(char *buf, int n, const char *fmt, ...);
 int printf(const char *format,...);
+void scr_clr(void);
 
 #endif
