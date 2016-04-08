@@ -36,7 +36,7 @@ void scr_write(char c){
 	}
 	int *p = (void *)VED_ADDR + (80 * row + column)*2;
 	*p = 0x0f00 | c;
-	//column++;
+	column++;
 
 }
 int sys_write(int fd, void *buf, int len) {
