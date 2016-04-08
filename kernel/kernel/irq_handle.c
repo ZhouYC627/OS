@@ -32,6 +32,7 @@ char ch;
 void scr_write(char c){
 	if (c == '\n'){
 		row++;
+		column = 0;
 		return;
 	}
 	int *p = (void *)VED_ADDR + (80 * row + column)*2;
