@@ -13,7 +13,7 @@ QEMU = qemu-system-i386
 
 define git_commit
 	-git add . -A --ignore-errors
-	-(echo "> play" && echo "141220162 Zhou YiChen" && uname -a && uptime && (head -c 20 /dev/urandom | hexdump -v -e '"%02x"') && echo) | git commit -F - -q
+	-(echo "> play" && echo "141220162 Zhou YiChen" && uname -a && uptime && echo) | git commit -F - -q --no-verify --allow-empty
 endef
 
 os.img:
