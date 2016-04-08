@@ -45,3 +45,7 @@ int printf(const char *format,...){
 	
 } 
 
+int scr_clr(){
+	return 0;
+}
+

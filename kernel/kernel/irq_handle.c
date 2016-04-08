@@ -3,6 +3,7 @@
 #define NR_IRQ_HANDLE 32
 
 #define NR_HARD_INTR 16
+#define VED_ADDR 0xB8000
 
 struct IRQ_t{
 	void (*routine)(void);
@@ -25,13 +26,20 @@ add_irq_handle(int irq, void (*func)(void) ){
     handles[irq] = ptr;
 }
 
+static int row = 0;
+static int column = 0;
 char ch;
+void scr_write(char c){
+	int *p = (void *)VED_ADDR + (80 * row + column)*2;
+	*p = 0x0f00 | c;
+}
 int sys_write(int fd, void *buf, int len) {
 	if ((fd==1) || (fd==2)){
 		int i;
 		for (i=0; i<len; i++){
 			ch = ((char*)buf+UADDR)[i];
 			putchar(ch);
+			scr_write(ch);
 		}
 	}
 	return len;
