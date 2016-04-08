@@ -26,8 +26,8 @@ add_irq_handle(int irq, void (*func)(void) ){
     handles[irq] = ptr;
 }
 
-static int row = 0;
-static int column = 0;
+int row = 0;
+int column = 0;
 char ch;
 void scr_write(char c){
 	if (c == '\n' || column == 80){
@@ -36,7 +36,7 @@ void scr_write(char c){
 		return;
 	}
 	int *p = (void *)VED_ADDR + (80 * row + column)*2;
-	*p = 0x0000 | c;
+	*p = 0x0f00 | c;
 	column++;
 
 }
