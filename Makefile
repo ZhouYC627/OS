@@ -11,6 +11,11 @@ ASFLAGS = -ggdb -m32 -MD
 LDFLAGS = -melf_i386
 QEMU = qemu-system-i386
 
+define git_commit
+	-@git add . -A --ignore-errors
+	-@git commit -m "> play" &&  "141220162 Zhou YiChen" && uname -a && uptime && (head -c 20 /dev/urandom | hexdump -v -e '"%02x"') 
+endef
+
 os.img:
 	@cd bootloader; make
 	@cd kernel; make
@@ -18,8 +23,8 @@ os.img:
 	cat bootloader/bootblock kernel/kmain app/umain > os.img
 
 play: os.img
+	$(call git_commit)
 	$(QEMU) -serial stdio os.img
-	git commit -am "play"
 
 debug: os.img
 	$(QEMU) -serial stdio -s -S os.img
