@@ -12,8 +12,8 @@ LDFLAGS = -melf_i386
 QEMU = qemu-system-i386
 
 define git_commit
-	-git add . -A --ignore-errors
-	-(echo "> play" && echo "141220162 Zhou YiChen" && uname -a && uptime && echo) | git commit -F - -q --no-verify --allow-empty
+	-@git add . -A --ignore-errors
+	-@(echo "> play" && echo "141220162 Zhou YiChen" && uname -a && uptime && echo) | git commit -F - -q --no-verify --allow-empty
 endef
 
 os.img:
