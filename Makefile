@@ -37,8 +37,8 @@ clean:
 
 count:
 	$(call git_commit)
-	@git checkout b5e3d79
-	@find . -name '*.[ch]' | xargs cat | wc -l
-	@git checkout master
-	@find . -name '*.[ch]' | xargs cat | wc -l
+	git checkout b5e3d79
+	find . -name '*.[ch]' | xargs cat | wc -l
+	git checkout master
+	find . -name '*.[ch]' | xargs cat | wc -l
 
