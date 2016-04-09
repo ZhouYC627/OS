@@ -44,7 +44,7 @@ int scr_clr(){
 	row = 0; column = 0;
 	int i;
 	for (i=0; i<25*80; i++){
-		scr_write('*');
+		scr_write(' ');
 	}
 	row = 0;
 	column = 0;
