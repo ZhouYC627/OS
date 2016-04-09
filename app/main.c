@@ -2,7 +2,7 @@
 
 void
 uentry(void){
-	scr_clr();
+	//scr_clr();
 	printf("printf test begin...\n");
 	printf("the answer should be:\n");
 	printf("#######################################################\n");
