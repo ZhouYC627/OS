@@ -34,3 +34,11 @@ clean:
 	@cd kernel; make clean
 	@cd app; make clean
 	rm -f os.img 
+
+count:
+	$(call git_commit)
+	git checkout b5e3d79
+	find . -name '*.[ch]' | xargs cat | wc -l
+	git checkout master
+	find . -name '*.[ch]' | xargs cat | wc -l
+
