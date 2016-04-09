@@ -41,6 +41,7 @@ void scr_write(char c){
 
 }
 int scr_clr(){
+	row = 0; column = 0;
 	int i;
 	for (i=0; i<25*80; i++){
 		scr_write('*');
