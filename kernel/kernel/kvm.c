@@ -57,8 +57,8 @@ enter_user_space(uint32_t entry) {
 void read_seg(unsigned char *buf, int offset, int len);
 uint32_t
 load_umain(void) {
-	int *p = (void *)0xB8000;
-	*p = 0x0c00 | 'H';
+	//int *p = (void *)0xB8000;
+	//*p = 0x0c00 | 'H';
     /*
      * Load your app here
      * 加载用户程序
