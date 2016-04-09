@@ -24,6 +24,5 @@ uentry(void){
 	printf("%x, %x, %x, %x, %x, %x\n", 0, 0xffffffff, 0x80000000, 0xabcedf01, -32768, 102030);
 	printf("=======================================================\n");
 	printf("Test end!!! Good luck!!!\n");
-	printf("HELLO\n");
 	while(1);
 }
