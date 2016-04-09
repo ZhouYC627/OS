@@ -43,7 +43,7 @@ void scr_write(char c){
 void scr_clr(){
 	int i;
 	for (i=0; i<25*80; i++){
-		scr_write(' ');
+		scr_write('*');
 	}
 	row = 0;
 	column = 0;
