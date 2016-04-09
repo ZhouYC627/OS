@@ -40,13 +40,14 @@ void scr_write(char c){
 	column++;
 
 }
-void scr_clr(){
+int scr_clr(){
 	int i;
 	for (i=0; i<25*80; i++){
 		scr_write('*');
 	}
 	row = 0;
 	column = 0;
+	return 1;
 }
 int sys_write(int fd, void *buf, int len) {
 	if ((fd==1) || (fd==2)){
@@ -75,8 +76,7 @@ void do_syscall(struct TrapFrame *tf){
 			tf->eax = sys_write(tf->ebx, (void*)tf->ecx, tf->edx);
 			break;
 		case 5:
-			assert(0);
-			scr_clr();
+			tf->eax = scr_clr();
 			break;
 		default: assert(0);
 	}
