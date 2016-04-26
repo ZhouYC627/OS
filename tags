@@ -7,6 +7,8 @@
 ASFLAGS	Makefile	/^ASFLAGS = -ggdb -m32 -MD$/;"	m
 ASFLAGS	app/Makefile	/^ASFLAGS = -ggdb -m32 -MD$/;"	m
 ASFLAGS	kernel/Makefile	/^ASFLAGS = -ggdb -m32 -MD$/;"	m
+ASM	lib/string.c	9;"	d	file:
+BLOCKED	kernel/include/schedule.h	/^enum {READY, RUNNING, BLOCKED, DEAD, EMPTY};$/;"	e	enum:__anon3
 BLUE_SCREEN_TEXT	kernel/lib/abort.c	23;"	d	file:
 CC	Makefile	/^CC = gcc$/;"	m
 CC	app/Makefile	/^CC = gcc$/;"	m
@@ -14,17 +16,45 @@ CC	kernel/Makefile	/^CC = gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS = -m32 -march=i386 -static -MD -std=gnu89 -ggdb \\$/;"	m
 CFLAGS	app/Makefile	/^CFLAGS = -m32 -march=i386 -static -MD -std=gnu89 -ggdb \\$/;"	m
 CFLAGS	kernel/Makefile	/^CFLAGS = -m32 -march=i386 -static -MD -std=gnu89 -ggdb \\$/;"	m
+DEAD	kernel/include/schedule.h	/^enum {READY, RUNNING, BLOCKED, DEAD, EMPTY};$/;"	e	enum:__anon3
 DPL_KERN	kernel/include/x86/memory.h	4;"	d
 DPL_USER	kernel/include/x86/memory.h	5;"	d
 ELFHeader	bootloader/boot.h	/^struct ELFHeader {$/;"	s
 ELFHeader	kernel/include/x86/io.h	/^struct ELFHeader {$/;"	s
+EMPTY	kernel/include/schedule.h	/^enum {READY, RUNNING, BLOCKED, DEAD, EMPTY};$/;"	e	enum:__anon3
+E_BAD_ENV	lib/error.h	/^	E_BAD_ENV	= 2,	\/\/ Environment doesn't exist or otherwise$/;"	e	enum:__anon1
+E_BAD_PATH	lib/error.h	/^	E_BAD_PATH	= 12,	\/\/ Bad path$/;"	e	enum:__anon1
+E_EOF	lib/error.h	/^	E_EOF		= 8,	\/\/ Unexpected end of file$/;"	e	enum:__anon1
+E_FAULT	lib/error.h	/^	E_FAULT		= 6,	\/\/ Memory fault$/;"	e	enum:__anon1
+E_FILE_EXISTS	lib/error.h	/^	E_FILE_EXISTS	= 13,	\/\/ File already exists$/;"	e	enum:__anon1
+E_INVAL	lib/error.h	/^	E_INVAL		= 3,	\/\/ Invalid parameter$/;"	e	enum:__anon1
+E_IPC_NOT_RECV	lib/error.h	/^	E_IPC_NOT_RECV	= 7,	\/\/ Attempt to send to env that is not recving$/;"	e	enum:__anon1
+E_MAX_OPEN	lib/error.h	/^	E_MAX_OPEN	= 10,	\/\/ Too many files are open$/;"	e	enum:__anon1
+E_NOT_EXEC	lib/error.h	/^	E_NOT_EXEC	= 14,	\/\/ File not a valid executable$/;"	e	enum:__anon1
+E_NOT_FOUND	lib/error.h	/^	E_NOT_FOUND	= 11, 	\/\/ File or block not found$/;"	e	enum:__anon1
+E_NOT_SUPP	lib/error.h	/^	E_NOT_SUPP	= 15,	\/\/ Operation not supported$/;"	e	enum:__anon1
+E_NO_DISK	lib/error.h	/^	E_NO_DISK	= 9,	\/\/ No free space left on disk$/;"	e	enum:__anon1
+E_NO_FREE_ENV	lib/error.h	/^	E_NO_FREE_ENV	= 5,	\/\/ Attempt to create a new environment beyond$/;"	e	enum:__anon1
+E_NO_MEM	lib/error.h	/^	E_NO_MEM	= 4,	\/\/ Request failed due to memory shortage$/;"	e	enum:__anon1
+E_PKT_TOO_LONG	lib/error.h	/^	E_PKT_TOO_LONG  = 18,   \/\/ Packet size is too big$/;"	e	enum:__anon1
+E_RCV_EMPTY	lib/error.h	/^	E_RCV_EMPTY     = 17,   \/\/ Receive queue is empty$/;"	e	enum:__anon1
+E_TX_FULL	lib/error.h	/^	E_TX_FULL       = 16,   \/\/ Transfer queue is full$/;"	e	enum:__anon1
+E_UNSPECIFIED	lib/error.h	/^	E_UNSPECIFIED	= 1,	\/\/ Unspecified or unknown problem$/;"	e	enum:__anon1
 FALSE	kernel/include/common/const.h	5;"	d
+FREQ_8253	kernel/kernel/timer.c	5;"	d	file:
 GDT_ENTRY	bootloader/asm.h	2;"	d
 GateDescriptor	kernel/include/x86/memory.h	/^struct GateDescriptor {$/;"	s
+HZ	kernel/kernel/timer.c	6;"	d	file:
 INTERRUPT_GATE_32	kernel/kernel/idt.c	4;"	d	file:
 IRQ_SLAVE	kernel/kernel/i8259.c	5;"	d	file:
+IRQ_t	kernel/kernel/irq_handle.c	/^struct IRQ_t{$/;"	s	file:
+JOS_INC_ERROR_H	lib/error.h	4;"	d
+JOS_INC_STDARG_H	lib/stdarg.h	4;"	d
+JOS_INC_STDIO_H	lib/stdio.h	2;"	d
+JOS_INC_STRING_H	lib/string.h	2;"	d
 KCFILES	kernel/Makefile	/^KCFILES = $(shell find .\/ -name "*.c")$/;"	m
 KOBJS	kernel/Makefile	/^KOBJS = $(KCFILES:.c=.o) $(KSFILES:.S=.o)$/;"	m
+KOFFSET	bootloader/boot-new.c	13;"	d	file:
 KOFFSET	bootloader/start.S	/^#define KOFFSET 0x0$/;"	d
 KSEL	kernel/include/x86/memory.h	26;"	d
 KSFILES	kernel/Makefile	/^KSFILES = $(shell find .\/ -name "*.S")$/;"	m
@@ -36,16 +66,31 @@ LDFLAGS	Makefile	/^LDFLAGS = -melf_i386$/;"	m
 LDFLAGS	app/Makefile	/^LDFLAGS = -melf_i386$/;"	m
 LDFLAGS	kernel/Makefile	/^LDFLAGS = -melf_i386$/;"	m
 L_A	bootloader/boot.c	3;"	d	file:
+MAX	lib/types.h	49;"	d
+MAXERROR	lib/error.h	/^	MAXERROR$/;"	e	enum:__anon1
+MAX_PCB	kernel/include/schedule.h	1;"	d
+MIN	lib/types.h	43;"	d
+NR_HARD_INTR	kernel/kernel/irq_handle.c	7;"	d	file:
 NR_IRQ	kernel/include/x86/cpu.h	34;"	d
+NR_IRQ_HANDLE	kernel/kernel/irq_handle.c	5;"	d	file:
 NR_SEGMENTS	kernel/include/x86/memory.h	18;"	d
 NULL	kernel/include/common/const.h	7;"	d
+NULL	lib/stdio.h	7;"	d
+NULL	lib/types.h	5;"	d
+PCB	kernel/include/schedule.h	/^}PCB;$/;"	t	typeref:struct:p_task_table
 PORT_PIC_MASTER	kernel/kernel/i8259.c	3;"	d	file:
 PORT_PIC_SLAVE	kernel/kernel/i8259.c	4;"	d	file:
+PROGRAIN	kernel/include/lib.h	2;"	d
 ProgramHeader	bootloader/boot.h	/^struct ProgramHeader {$/;"	s
 ProgramHeader	kernel/include/x86/io.h	/^struct ProgramHeader {$/;"	s
 QEMU	Makefile	/^QEMU = qemu-system-i386$/;"	m
 QEMU	app/Makefile	/^QEMU = qemu-system-i386$/;"	m
 QEMU	kernel/Makefile	/^QEMU = qemu-system-i386$/;"	m
+ROUNDDOWN	lib/types.h	58;"	d
+ROUNDUP	lib/types.h	64;"	d
+READY	kernel/include/schedule.h	/^enum {READY, RUNNING, BLOCKED, DEAD, EMPTY};$/;"	e	enum:__anon3
+RUNNING	kernel/include/schedule.h	/^enum {READY, RUNNING, BLOCKED, DEAD, EMPTY};$/;"	e	enum:__anon3
+SECTSIZE	bootloader/boot-new.c	12;"	d	file:
 SECTSIZE	bootloader/boot.c	2;"	d	file:
 SECTSIZE	kernel/kernel/kvm.c	4;"	d	file:
 SEG	kernel/include/x86/memory.h	62;"	d
@@ -58,23 +103,37 @@ SEG_TSS	kernel/include/x86/memory.h	23;"	d
 SEG_UCODE	kernel/include/x86/memory.h	21;"	d
 SEG_UDATA	kernel/include/x86/memory.h	22;"	d
 SERIAL_PORT	kernel/include/device/serial.h	6;"	d
+SLICESIZE	kernel/include/schedule.h	3;"	d
+STACKSIZE	kernel/include/schedule.h	2;"	d
 STA_R	kernel/include/x86/memory.h	10;"	d
 STA_W	kernel/include/x86/memory.h	9;"	d
 STA_X	kernel/include/x86/memory.h	8;"	d
 STS_IG32	kernel/include/x86/memory.h	14;"	d
 STS_T32A	kernel/include/x86/memory.h	13;"	d
 STS_TG32	kernel/include/x86/memory.h	15;"	d
+SYS_close	kernel/include/syscall.h	6;"	d
+SYS_clr	kernel/include/syscall.h	9;"	d
+SYS_exit	kernel/include/syscall.h	1;"	d
+SYS_fork	kernel/include/syscall.h	2;"	d
+SYS_open	kernel/include/syscall.h	5;"	d
+SYS_read	kernel/include/syscall.h	3;"	d
+SYS_sleep	kernel/include/syscall.h	7;"	d
+SYS_write	kernel/include/syscall.h	4;"	d
 SegDesc	kernel/include/x86/memory.h	/^struct SegDesc {$/;"	s
 SegDesc	kernel/include/x86/memory.h	/^typedef struct SegDesc SegDesc;$/;"	t	typeref:struct:SegDesc
+TIMER_PORT	kernel/kernel/timer.c	4;"	d	file:
 TRAP_GATE_32	kernel/kernel/idt.c	5;"	d	file:
 TRUE	kernel/include/common/const.h	4;"	d
 TSS	kernel/include/x86/memory.h	/^struct TSS {$/;"	s
 TSS	kernel/include/x86/memory.h	/^typedef struct TSS TSS;$/;"	t	typeref:struct:TSS
 TrapFrame	kernel/include/x86/memory.h	/^struct TrapFrame {$/;"	s
+UADDR	kernel/include/x86.h	4;"	d
 UCFILES	app/Makefile	/^UCFILES = $(shell find .\/ -name "*.c")$/;"	m
 UOBJS	app/Makefile	/^UOBJS = $(UCFILES:.c=.o) $(LCFILES:.c=.o)$/;"	m
 USEL	kernel/include/x86/memory.h	27;"	d
+VED_ADDR	kernel/kernel/irq_handle.c	8;"	d	file:
 V_ADDR	bootloader/boot.c	4;"	d	file:
+V_ADDR	kernel/include/lib.h	1;"	d
 __ASSERT_H__	kernel/include/common/assert.h	2;"	d
 __COMMON_H__	kernel/include/common.h	2;"	d
 __CONST_H__	kernel/include/common/const.h	2;"	d
@@ -89,6 +148,7 @@ __X86_IO_H__	kernel/include/x86/io.h	2;"	d
 __X86_MEMORY_H__	kernel/include/x86/memory.h	2;"	d
 __lib_h__	lib/lib.h	2;"	d
 abort	kernel/lib/abort.c	/^abort(const char *fname, int line) {$/;"	f
+add_irq_handle	kernel/kernel/irq_handle.c	/^add_irq_handle(int irq, void (*func)(void) ){$/;"	f
 align	bootloader/boot.h	/^	unsigned int align;$/;"	m	struct:ProgramHeader
 align	kernel/include/x86/io.h	/^	unsigned int align;$/;"	m	struct:ProgramHeader
 append	kernel/lib/abort.c	/^append(char **p, const char *str) {$/;"	f	file:
@@ -98,57 +158,89 @@ avl	kernel/include/x86/memory.h	/^	uint32_t avl : 1;        \/\/ Unused (availab
 base_15_0	kernel/include/x86/memory.h	/^	uint32_t base_15_0 : 16; \/\/ Low bits of segment base address$/;"	m	struct:SegDesc
 base_23_16	kernel/include/x86/memory.h	/^	uint32_t base_23_16 : 8; \/\/ Middle bits of segment base address$/;"	m	struct:SegDesc
 base_31_24	kernel/include/x86/memory.h	/^	uint32_t base_31_24 : 8; \/\/ High bits of segment base address$/;"	m	struct:SegDesc
-boolean	lib/types.h	/^typedef unsigned char  boolean;$/;"	t
+bool	lib/types.h	/^typedef _Bool bool;$/;"	t
+bootmain	bootloader/boot-new.c	/^bootmain(void) {$/;"	f
 bootmain	bootloader/boot.c	/^void bootmain(void)$/;"	f
-cr3	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
-cs	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+buf	lib/printfmt.c	/^	char *buf;$/;"	m	struct:sprintbuf	file:
+ch	kernel/kernel/irq_handle.c	/^char ch;$/;"	v
+cnt	lib/printfmt.c	/^	int cnt;$/;"	m	struct:sprintbuf	file:
+column	kernel/kernel/irq_handle.c	/^int column;$/;"	v
+cr3	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+cs	kernel/include/schedule.h	/^    uint32_t eip, cs, eflags, esp, ss;$/;"	m	struct:p_process_table
+cs	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
+current	kernel/kernel/schedule.c	/^PCB idle, *current = &idle;$/;"	v
 db	kernel/include/x86/memory.h	/^	uint32_t db : 1;         \/\/ 0 = 16-bit segment, 1 = 32-bit segment$/;"	m	struct:SegDesc
 disable_interrupt	kernel/include/x86/cpu.h	/^disable_interrupt(void) {$/;"	f
 display_message	kernel/lib/abort.c	/^display_message(const char *file, int line) {$/;"	f	file:
-dontcare	kernel/include/x86/memory.h	/^                char dontcare[88];$/;"	m	struct:TSS::__anon1::__anon2
+do_syscall	kernel/kernel/irq_handle.c	/^void do_syscall(struct TrapFrame *tf){$/;"	f
+dontcare	kernel/include/x86/memory.h	/^                char dontcare[88];$/;"	m	struct:TSS::__anon4::__anon5
 dpl	kernel/include/x86/memory.h	/^	uint32_t dpl : 2;        \/\/ Descriptor Privilege Level$/;"	m	struct:SegDesc
-ds	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+ds	kernel/include/schedule.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:p_process_table
+ds	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
+eax	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 eax	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-eax	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+eax	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+ebp	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 ebp	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-ebp	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+ebp	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+ebuf	lib/printfmt.c	/^	char *ebuf;$/;"	m	struct:sprintbuf	file:
+ebx	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 ebx	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-ebx	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+ebx	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+ecx	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 ecx	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-ecx	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+ecx	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+edi	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 edi	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-edi	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+edi	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+edx	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 edx	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-edx	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
-eflags	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+edx	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+eflags	kernel/include/schedule.h	/^    uint32_t eip, cs, eflags, esp, ss;$/;"	m	struct:p_process_table
+eflags	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
 ehsize	bootloader/boot.h	/^	unsigned short ehsize;$/;"	m	struct:ELFHeader
 ehsize	kernel/include/x86/io.h	/^	unsigned short ehsize;$/;"	m	struct:ELFHeader
-eip	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+eip	kernel/include/schedule.h	/^    uint32_t eip, cs, eflags, esp, ss;$/;"	m	struct:p_process_table
+eip	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
 elf	bootloader/boot.h	/^	unsigned char  elf[12];$/;"	m	struct:ELFHeader
 elf	kernel/include/x86/io.h	/^	unsigned char  elf[12];$/;"	m	struct:ELFHeader
 enable_interrupt	kernel/include/x86/cpu.h	/^enable_interrupt(void) {$/;"	f
-enter_user_space	kernel/kernel/kvm.c	/^enter_user_space(void) {$/;"	f
+enter_user_space	kernel/kernel/kvm.c	/^enter_user_space(uint32_t entry) {$/;"	f
 entry	bootloader/boot.h	/^	unsigned int   entry;$/;"	m	struct:ELFHeader
 entry	kernel/include/x86/io.h	/^	unsigned int   entry;$/;"	m	struct:ELFHeader
-es	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+error_string	lib/printfmt.c	/^static const char * const error_string[MAXERROR] =$/;"	v	file:
+es	kernel/include/schedule.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:p_process_table
+es	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
+esi	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 esi	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame
-esi	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
-esp	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon1::__anon3
+esi	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
+esp	kernel/include/schedule.h	/^    uint32_t eip, cs, eflags, esp, ss;$/;"	m	struct:p_process_table
+esp	kernel/include/x86/memory.h	/^                uint32_t cr3, eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;$/;"	m	struct:TSS::__anon4::__anon6
 esp0	kernel/include/x86/memory.h	/^	uint32_t esp0;         \/\/ Ring 0 Stack pointer and segment selector$/;"	m	struct:TSS
-esp1	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon1::__anon3
-esp2	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon1::__anon3
+esp1	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon4::__anon6
+esp2	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon4::__anon6
+false	lib/types.h	/^enum { false, true };$/;"	e	enum:__anon2
 filesz	bootloader/boot.h	/^	unsigned int filesz;$/;"	m	struct:ProgramHeader
 filesz	kernel/include/x86/io.h	/^	unsigned int filesz;$/;"	m	struct:ProgramHeader
 flags	bootloader/boot.h	/^	unsigned int   flags;$/;"	m	struct:ELFHeader
 flags	bootloader/boot.h	/^	unsigned int flags;$/;"	m	struct:ProgramHeader
 flags	kernel/include/x86/io.h	/^	unsigned int   flags;$/;"	m	struct:ELFHeader
 flags	kernel/include/x86/io.h	/^	unsigned int flags;$/;"	m	struct:ProgramHeader
-fs	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+fs	kernel/include/schedule.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:p_process_table
+fs	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
 g	kernel/include/x86/memory.h	/^	uint32_t g : 1;          \/\/ Granularity: limit scaled by 4K when set$/;"	m	struct:SegDesc
 gdt	bootloader/start.S	/^gdt:    #NULL$/;"	l
 gdt	kernel/kernel/kvm.c	/^SegDesc gdt[NR_SEGMENTS];       \/\/ the new GDT$/;"	v
 gdtdesc	bootloader/start.S	/^gdtdesc:                           # GDT描述符$/;"	l
-gs	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+getint	lib/printfmt.c	/^getint(va_list *ap, int lflag)$/;"	f	file:
+getuint	lib/printfmt.c	/^getuint(va_list *ap, int lflag)$/;"	f	file:
+git_commit	Makefile	/^define git_commit$/;"	m
+gs	kernel/include/schedule.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:p_process_table
+gs	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
+handle_count	kernel/kernel/irq_handle.c	/^static int handle_count = 0;$/;"	v	file:
+handle_pool	kernel/kernel/irq_handle.c	/^static struct IRQ_t handle_pool[NR_IRQ_HANDLE];$/;"	v	typeref:struct:IRQ_t	file:
+handles	kernel/kernel/irq_handle.c	/^static struct IRQ_t *handles[NR_HARD_INTR];$/;"	v	typeref:struct:IRQ_t	file:
+idle	kernel/kernel/schedule.c	/^PCB idle, *current = &idle;$/;"	v
 idt	kernel/kernel/idt.c	/^struct GateDescriptor idt[NR_IRQ];$/;"	v	typeref:struct:GateDescriptor
 in_byte	bootloader/boot.h	/^in_byte(short port) {$/;"	f
 in_byte	kernel/include/x86/io.h	/^in_byte(uint16_t port) {$/;"	f
@@ -156,60 +248,96 @@ in_long	bootloader/boot.h	/^in_long(short port) {$/;"	f
 in_long	kernel/include/x86/io.h	/^in_long(short port) {$/;"	f
 init_idt	kernel/kernel/idt.c	/^void init_idt() {$/;"	f
 init_intr	kernel/kernel/i8259.c	/^init_intr(void) {$/;"	f
+init_pcb	kernel/kernel/schedule.c	/^void init_pcb(void){$/;"	f
 init_seg	kernel/kernel/kvm.c	/^init_seg() { \/\/ setup kernel segements$/;"	f
 init_serial	kernel/kernel/serial.c	/^init_serial(void) {$/;"	f
+init_timer	kernel/kernel/timer.c	/^void init_timer(void) {$/;"	f
 int16_t	kernel/include/common/types.h	/^typedef          short int16_t;$/;"	t
-int16_t	lib/types.h	/^typedef          short int16_t;$/;"	t
+int16_t	lib/types.h	/^typedef short int16_t;$/;"	t
 int32_t	kernel/include/common/types.h	/^typedef          int   int32_t;$/;"	t
-int32_t	lib/types.h	/^typedef          int   int32_t;$/;"	t
+int32_t	lib/types.h	/^typedef int int32_t;$/;"	t
+int64_t	lib/types.h	/^typedef long long int64_t;$/;"	t
 int8_t	kernel/include/common/types.h	/^typedef          char  int8_t;$/;"	t
-int8_t	lib/types.h	/^typedef          char  int8_t;$/;"	t
+int8_t	lib/types.h	/^typedef __signed char int8_t;$/;"	t
+intptr_t	lib/types.h	/^typedef int32_t intptr_t;$/;"	t
 irq	kernel/include/x86/memory.h	/^	int32_t irq;$/;"	m	struct:TrapFrame
 irq_handle	kernel/kernel/irq_handle.c	/^irq_handle(struct TrapFrame *tf) {$/;"	f
 itoa	kernel/lib/abort.c	/^itoa(int a) {$/;"	f	file:
+k_stack	kernel/include/schedule.h	/^    unsigned int k_stack[STACKSIZE];$/;"	m	struct:p_task_table
 kentry	kernel/main.c	/^kentry(void) {$/;"	f
-ldt	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+ldt	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
 lim_15_0	kernel/include/x86/memory.h	/^	uint32_t lim_15_0 : 16;  \/\/ Low bits of segment limit$/;"	m	struct:SegDesc
 lim_19_16	kernel/include/x86/memory.h	/^	uint32_t lim_19_16 : 4;  \/\/ High bits of segment limit$/;"	m	struct:SegDesc
 link	kernel/include/x86/memory.h	/^	uint32_t link;         \/\/ old ts selector$/;"	m	struct:TSS
 lldt	kernel/include/x86/memory.h	/^lldt(uint16_t sel)$/;"	f
 load_umain	kernel/kernel/kvm.c	/^load_umain(void) {$/;"	f
 loop	bootloader/start.S	/^loop:$/;"	l
+ltr	kernel/include/x86/memory.h	/^ltr(uint16_t sel) {$/;"	f
 machine	bootloader/boot.h	/^	unsigned short machine;$/;"	m	struct:ELFHeader
 machine	kernel/include/x86/io.h	/^	unsigned short machine;$/;"	m	struct:ELFHeader
 magic	bootloader/boot.h	/^	unsigned int   magic;$/;"	m	struct:ELFHeader
 magic	kernel/include/x86/io.h	/^	unsigned int   magic;$/;"	m	struct:ELFHeader
+memcmp	lib/string.c	/^memcmp(const void *v1, const void *v2, size_t n)$/;"	f
+memcpy	lib/string.c	/^memcpy(void *dst, void *src, size_t n)$/;"	f
+memfind	lib/string.c	/^memfind(const void *s, int c, size_t n)$/;"	f
+memmove	lib/string.c	/^memmove(void *dst, const void *src, size_t n)$/;"	f
+memset	lib/string.c	/^memset(void *v, int c, size_t n)$/;"	f
 memsz	bootloader/boot.h	/^	unsigned int memsz;$/;"	m	struct:ProgramHeader
 memsz	kernel/include/x86/io.h	/^	unsigned int memsz;$/;"	m	struct:ProgramHeader
+next	kernel/include/schedule.h	/^    PCB* next;$/;"	m	struct:p_task_table
+next	kernel/kernel/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:
 off	bootloader/boot.h	/^	unsigned int off;$/;"	m	struct:ProgramHeader
 off	kernel/include/x86/io.h	/^	unsigned int off;$/;"	m	struct:ProgramHeader
+off_t	lib/types.h	/^typedef int32_t off_t;$/;"	t
 offset_15_0	kernel/include/x86/memory.h	/^	uint32_t offset_15_0      : 16;$/;"	m	struct:GateDescriptor
 offset_31_16	kernel/include/x86/memory.h	/^	uint32_t offset_31_16     : 16;$/;"	m	struct:GateDescriptor
+offsetof	lib/types.h	71;"	d
 out_byte	bootloader/boot.h	/^out_byte(short port, char data) {$/;"	f
 out_byte	kernel/include/x86/io.h	/^out_byte(uint16_t port, int8_t data) {$/;"	f
 out_byte2	kernel/include/x86/io.h	/^out_byte2(short port, char data) {$/;"	f
 p	kernel/include/x86/memory.h	/^	uint32_t p : 1;          \/\/ Present$/;"	m	struct:SegDesc
+p_process_table	kernel/include/schedule.h	/^typedef struct p_process_table{$/;"	s
+p_task_table	kernel/include/schedule.h	/^typedef struct p_task_table{$/;"	s
 pad0	kernel/include/x86/memory.h	/^	uint32_t pad0             : 8;$/;"	m	struct:GateDescriptor
 paddr	bootloader/boot.h	/^	unsigned int paddr;$/;"	m	struct:ProgramHeader
 paddr	kernel/include/x86/io.h	/^	unsigned int paddr;$/;"	m	struct:ProgramHeader
+pcb_table	kernel/kernel/schedule.c	/^PCB pcb_table[MAX_PCB];$/;"	v
 phentsize	bootloader/boot.h	/^	unsigned short phentsize;$/;"	m	struct:ELFHeader
 phentsize	kernel/include/x86/io.h	/^	unsigned short phentsize;$/;"	m	struct:ELFHeader
 phnum	bootloader/boot.h	/^	unsigned short phnum;$/;"	m	struct:ELFHeader
 phnum	kernel/include/x86/io.h	/^	unsigned short phnum;$/;"	m	struct:ELFHeader
 phoff	bootloader/boot.h	/^	unsigned int   phoff;$/;"	m	struct:ELFHeader
 phoff	kernel/include/x86/io.h	/^	unsigned int   phoff;$/;"	m	struct:ELFHeader
-pid_t	lib/types.h	/^typedef int32_t  pid_t;$/;"	t
+physaddr_t	lib/types.h	/^typedef uint32_t physaddr_t;$/;"	t
+pid	kernel/include/schedule.h	/^    unsigned int pid;$/;"	m	struct:p_task_table
+ppn_t	lib/types.h	/^typedef uint32_t ppn_t;$/;"	t
 present	kernel/include/x86/memory.h	/^	uint32_t present          : 1;$/;"	m	struct:GateDescriptor
+print_c	kernel/include/lib.h	/^void print_c(char c, int x, int y){$/;"	f
+print_col	kernel/include/lib.h	/^void print_col(char *s, int line)$/;"	f
+print_d	kernel/include/lib.h	/^void print_d(double d, int line){$/;"	f
 print_s	bootloader/boot.c	/^void print_s(char *s, int line){$/;"	f
-printf	lib/syscall.c	/^void printf(const char *format,...){$/;"	f
+print_s	kernel/include/lib.h	/^void print_s(char *s, int line)$/;"	f
+printf	lib/syscall.c	/^int printf(const char *format,...){$/;"	f
+printfmt	lib/printfmt.c	/^printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...)$/;"	f
+printnum	lib/printfmt.c	/^printnum(void (*putch)(int, void*), void *putdat,$/;"	f	file:
 privilege_level	kernel/include/x86/memory.h	/^	uint32_t privilege_level  : 2;$/;"	m	struct:GateDescriptor
 putchar	kernel/kernel/serial.c	/^putchar(char ch) {$/;"	f
 ramdisk_read	bootloader/boot.c	/^void ramdisk_read(char *buf, int offset, int len){$/;"	f
+read_seg	kernel/kernel/kvm.c	/^void read_seg(unsigned char *buf, int offset, int len){$/;"	f
+readsect	bootloader/boot-new.c	/^readsect(void *dst, int offset) {$/;"	f
 readsect	bootloader/boot.c	/^readsect(void *dst, int offset) {$/;"	f
 readsect	kernel/kernel/kvm.c	/^readsect(void *dst, int offset) {$/;"	f
+readseg	bootloader/boot-new.c	/^readseg(unsigned char *pa, int count, int offset) {$/;"	f
+regs	kernel/include/schedule.h	/^    stackframe regs;$/;"	m	struct:p_task_table
+routine	kernel/kernel/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:
+row	kernel/kernel/irq_handle.c	/^int row;$/;"	v
 rsv1	kernel/include/x86/memory.h	/^	uint32_t rsv1 : 1;       \/\/ Reserved$/;"	m	struct:SegDesc
 s	kernel/include/x86/memory.h	/^	uint32_t s : 1;          \/\/ 0 = system, 1 = application$/;"	m	struct:SegDesc
 save_idt	kernel/include/x86/cpu.h	/^save_idt(void *addr, uint32_t size) {$/;"	f
+schedule	kernel/kernel/schedule.c	/^void schedule(void){$/;"	f
+scr_clr	kernel/kernel/irq_handle.c	/^int scr_clr(){$/;"	f
+scr_clr	lib/syscall.c	/^int scr_clr(){$/;"	f
+scr_write	kernel/kernel/irq_handle.c	/^void scr_write(char c){$/;"	f
 segment	kernel/include/x86/memory.h	/^	uint32_t segment          : 16;$/;"	m	struct:GateDescriptor
 serial_idle	kernel/kernel/serial.c	/^serial_idle(void) {$/;"	f	file:
 set_gdt	kernel/include/x86/memory.h	/^set_gdt(SegDesc *gdt, uint32_t size) {$/;"	f
@@ -225,14 +353,37 @@ shstrndx	bootloader/boot.h	/^	unsigned short shstrndx;$/;"	m	struct:ELFHeader
 shstrndx	kernel/include/x86/io.h	/^	unsigned short shstrndx;$/;"	m	struct:ELFHeader
 size_t	kernel/include/common/types.h	/^typedef unsigned int   size_t;$/;"	t
 size_t	lib/types.h	/^typedef uint32_t size_t;$/;"	t
-ss	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon1::__anon3
+sleep_time	kernel/include/schedule.h	/^    int sleep_time;$/;"	m	struct:p_task_table
+snprintf	lib/printfmt.c	/^snprintf(char *buf, int n, const char *fmt, ...)$/;"	f
+sprintbuf	lib/printfmt.c	/^struct sprintbuf {$/;"	s	file:
+sprintputch	lib/printfmt.c	/^sprintputch(int ch, struct sprintbuf *b)$/;"	f	file:
+ss	kernel/include/schedule.h	/^    uint32_t eip, cs, eflags, esp, ss;$/;"	m	struct:p_process_table
+ss	kernel/include/x86/memory.h	/^                uint32_t es, cs, ss, ds, fs, gs, ldt;$/;"	m	struct:TSS::__anon4::__anon6
 ss0	kernel/include/x86/memory.h	/^	uint32_t ss0;          \/\/ after an increase in privilege level$/;"	m	struct:TSS
-ss1	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon1::__anon3
-ss2	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon1::__anon3
+ss1	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon4::__anon6
+ss2	kernel/include/x86/memory.h	/^                uint32_t esp1,ss1,esp2,ss2;$/;"	m	struct:TSS::__anon4::__anon6
+ssize_t	lib/types.h	/^typedef int32_t ssize_t;$/;"	t
+stackframe	kernel/include/schedule.h	/^}stackframe;$/;"	t	typeref:struct:p_process_table
 start	bootloader/start.S	/^start:$/;"	l
 start32	bootloader/start.S	/^start32:$/;"	l
-syscall	lib/syscall.c	/^static inline int32_t syscall(int num, int check, uint32_t a1,uint32_t a2,$/;"	f	file:
+state	kernel/include/schedule.h	/^    int state;$/;"	m	struct:p_task_table
+strcat	lib/string.c	/^strcat(char *dst, const char *src)$/;"	f
+strchr	lib/string.c	/^strchr(const char *s, char c)$/;"	f
+strcmp	lib/string.c	/^strcmp(const char *p, const char *q)$/;"	f
+strcpy	lib/string.c	/^strcpy(char *dst, const char *src)$/;"	f
+strfind	lib/string.c	/^strfind(const char *s, char c)$/;"	f
+strlcpy	lib/string.c	/^strlcpy(char *dst, const char *src, size_t size)$/;"	f
+strlen	lib/string.c	/^strlen(const char *s)$/;"	f
+strncmp	lib/string.c	/^strncmp(const char *p, const char *q, size_t n)$/;"	f
+strncpy	lib/string.c	/^strncpy(char *dst, const char *src, size_t size) {$/;"	f
+strnlen	lib/string.c	/^strnlen(const char *s, size_t size)$/;"	f
+strtol	lib/string.c	/^strtol(const char *s, char **endptr, int base)$/;"	f
+sys_write	kernel/kernel/irq_handle.c	/^int sys_write(int fd, void *buf, int len) {$/;"	f
+syscall	lib/syscall.c	/^static inline int32_t syscall(int num, int check, uint32_t a1,uint32_t a2)$/;"	f	file:
 system	kernel/include/x86/memory.h	/^	uint32_t system           : 1;$/;"	m	struct:GateDescriptor
+time_count	kernel/include/schedule.h	/^    int time_count;$/;"	m	struct:p_task_table
+time_tick	kernel/kernel/timer.c	/^volatile uint32_t time_tick = 0;$/;"	v
+true	lib/types.h	/^enum { false, true };$/;"	e	enum:__anon2
 tss	kernel/kernel/kvm.c	/^TSS tss;$/;"	v
 type	bootloader/boot.h	/^	unsigned int type;$/;"	m	struct:ProgramHeader
 type	bootloader/boot.h	/^	unsigned short type;$/;"	m	struct:ELFHeader
@@ -244,14 +395,24 @@ uentry	app/main.c	/^uentry(void){$/;"	f
 uint16_t	kernel/include/common/types.h	/^typedef unsigned short uint16_t;$/;"	t
 uint16_t	lib/types.h	/^typedef unsigned short uint16_t;$/;"	t
 uint32_t	kernel/include/common/types.h	/^typedef unsigned int   uint32_t;$/;"	t
-uint32_t	lib/types.h	/^typedef unsigned int   uint32_t;$/;"	t
+uint32_t	lib/types.h	/^typedef unsigned int uint32_t;$/;"	t
+uint64_t	lib/types.h	/^typedef unsigned long long uint64_t;$/;"	t
 uint8_t	kernel/include/common/types.h	/^typedef unsigned char  uint8_t;$/;"	t
-uint8_t	lib/types.h	/^typedef unsigned char  uint8_t;$/;"	t
+uint8_t	lib/types.h	/^typedef unsigned char uint8_t;$/;"	t
+uintptr_t	lib/types.h	/^typedef uint32_t uintptr_t;$/;"	t
+va_arg	lib/stdarg.h	10;"	d
+va_end	lib/stdarg.h	12;"	d
+va_list	lib/stdarg.h	/^typedef __builtin_va_list va_list;$/;"	t
+va_start	lib/stdarg.h	8;"	d
 vaddr	bootloader/boot.h	/^	unsigned int vaddr;$/;"	m	struct:ProgramHeader
 vaddr	kernel/include/x86/io.h	/^	unsigned int vaddr;$/;"	m	struct:ProgramHeader
 version	bootloader/boot.h	/^	unsigned int   version;$/;"	m	struct:ELFHeader
 version	kernel/include/x86/io.h	/^	unsigned int   version;$/;"	m	struct:ELFHeader
+vprintfmt	lib/printfmt.c	/^vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)$/;"	f
+vsnprintf	lib/printfmt.c	/^vsnprintf(char *buf, int n, const char *fmt, va_list ap)$/;"	f
 wait_for_interrupt	kernel/include/x86/cpu.h	/^wait_for_interrupt() {$/;"	f
+waitdisk	bootloader/boot-new.c	/^waitdisk(void) {$/;"	f
 waitdisk	bootloader/boot.c	/^waitdisk(void) {$/;"	f
 waitdisk	kernel/kernel/kvm.c	/^waitdisk(void) {$/;"	f
+xxx	kernel/include/schedule.h	/^    uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:p_process_table
 xxx	kernel/include/x86/memory.h	/^	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame

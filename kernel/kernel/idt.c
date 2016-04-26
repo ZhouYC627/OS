@@ -86,10 +86,10 @@ void init_idt() {
 
 	//system call int 0x80
 	set_trap(idt + 0x80, SEG_KCODE, (uint32_t)vecsys, DPL_USER);
-	
-	set_intr(idt + 0x0 , SEG_KCODE, (uint32_t)irq0, DPL_KERN);
-	set_intr(idt + 0x1 , SEG_KCODE, (uint32_t)irq1, DPL_KERN);
-	set_intr(idt + 14  , SEG_KCODE, (uint32_t)irq14, DPL_KERN);
+
+	set_intr(idt + 0x20 , SEG_KCODE, (uint32_t)irq0, DPL_KERN);
+	set_intr(idt + 0x21 , SEG_KCODE, (uint32_t)irq1, DPL_KERN);
+	set_intr(idt + 0x20 + 14  , SEG_KCODE, (uint32_t)irq14, DPL_KERN);
 
 	set_intr(idt + 0x41, SEG_KCODE, (uint32_t)test1, DPL_KERN);
 	set_intr(idt + 0x42, SEG_KCODE, (uint32_t)test2, DPL_USER);
@@ -97,4 +97,3 @@ void init_idt() {
 	/* 写入IDT */
 	save_idt(idt, sizeof(idt));
 }
-

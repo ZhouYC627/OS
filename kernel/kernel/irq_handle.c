@@ -1,5 +1,7 @@
 #include "x86.h"
 #include "device.h"
+#include "syscall.h"
+#include "schedule.h"
 #define NR_IRQ_HANDLE 32
 
 #define NR_HARD_INTR 16
@@ -71,19 +73,20 @@ void do_syscall(struct TrapFrame *tf){
 			//sti();
 			enable_interrupt();
 			break;
-		
+
 		//case SYS_brk:  tf->eax = 0; break;
-		case 4:
+		case SYS_write:
 			tf->eax = sys_write(tf->ebx, (void*)tf->ecx, tf->edx);
 			break;
-		case 5:
+		case SYS_clr:
 			tf->eax = scr_clr();
 			break;
 		default: assert(0);
 	}
 }
 
-void 
+extern PCB *current;
+void
 irq_handle(struct TrapFrame *tf) {
     /*
      * 中断处理程序
@@ -91,29 +94,36 @@ irq_handle(struct TrapFrame *tf) {
 	asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
     int irq = tf->irq;
     switch(irq) {
-        case 1000:break;
-        case 1001:break;
+      case 1000:break;
+      case 1001:break;
 
-	case 0:		break;
-	case 1:		break;
-	case 2:		break;
-	case 3:		break;
-	case 4:		break;
-	case 5:		break;
-	case 6:		break;
-	case 7:		break;
-	case 8:		break;
-	case 9:		break;
-	case 10:	break;
-	case 11:	break;
-	case 12:	break;
-	case 13:	break;
-	case 14:	break;
-	case 0x80:
-		do_syscall(tf);
-		break;
-   	default:assert(0);
+			case 0:		break;
+			case 1:		break;
+			case 2:		break;
+			case 3:		break;
+			case 4:		break;
+			case 5:		break;
+			case 6:		break;
+			case 7:		break;
+			case 8:		break;
+			case 9:		break;
+			case 10:	break;
+			case 11:	break;
+			case 12:	break;
+			case 13:	break;
+			case 14:	break;
+			case 0x2d:
+				break;
+			case 0x80:
+				do_syscall(tf);
+				break;
+			case 0x20:
+				current->time_count--;
+				if (current->time_count == 0){
+					schedule();
+				}
+				break;
+   		default:assert(0);
     }
 	asm volatile("movw %%ax,%%ds":: "a" (USEL(SEG_UDATA)));
 }
-

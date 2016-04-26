@@ -1,5 +1,6 @@
 #include "lib.h"
 #include "types.h"
+#include "../kernel/include/syscall.h"
 /*
  * io lib here
  * 库函数写在这
@@ -41,11 +42,10 @@ int printf(const char *format,...){
 	static char buf[256];
 	void *args = (void**)&format + 1;
 	int len = vsnprintf(buf, 256, format, args);
-	return syscall(4, 1, (uint32_t)buf, len);
-	
-} 
+	return syscall(SYS_write, 1, (uint32_t)buf, len);
 
-int scr_clr(){
-	return syscall(5, 1, 1, 1);
 }
 
+int scr_clr(){
+	return syscall(SYS_clr, 1, 1, 1);
+}

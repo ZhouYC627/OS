@@ -38,13 +38,13 @@ init_seg() { // setup kernel segements
 void
 enter_user_space(uint32_t entry) {
     /*
-     * Before enter user space 
+     * Before enter user space
      * you should set the right segment registers here
      * and use 'iret' to jump to ring3
      * 进入用户空间
      */
 	 asm volatile("movw %%ax,%%ds" :: "a" (USEL(SEG_UDATA)));
-     asm volatile("pushl %%eax" :: "a"(USEL(SEG_UDATA))); //ss
+	 asm volatile("pushl %%eax" :: "a"(USEL(SEG_UDATA))); //ss
 	 asm volatile("pushl %%eax" :: "a" (0x400000));	//esp
 	 asm volatile("pushfl");	//eflags;
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
@@ -65,7 +65,7 @@ load_umain(void) {
      struct ProgramHeader *ph;//, *eph;
      unsigned char *c;
 	 //uint8_t buf[4096];
-     
+
      elf = (struct ELFHeader*)0x8000;
      read_seg((unsigned char*)elf, 200*SECTSIZE, 4096);
      ph = (struct ProgramHeader*)((unsigned char *)elf + elf->phoff);
@@ -87,14 +87,15 @@ load_umain(void) {
 	 //gdt[SEG_UCODE].dpl = 3;
 	 //gdt[SEG_UDATA].dpl = 3;
 
-     return(elf->entry);
+	 		enable_interrupt();
+		 return(elf->entry);
 
 
 }
 
 void
 waitdisk(void) {
-	while((in_byte(0x1F7) & 0xC0) != 0x40); 
+	while((in_byte(0x1F7) & 0xC0) != 0x40);
 }
 
 void

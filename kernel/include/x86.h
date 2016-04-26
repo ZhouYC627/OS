@@ -9,5 +9,7 @@
 
 void init_seg(void);
 uint32_t load_umain(void);
+void init_timer(void);
+void init_pcb(uint32_t);
 
 #endif
