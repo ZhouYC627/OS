@@ -34,12 +34,12 @@ void init_pcb(uint32_t entry){
 }
 
 void schedule(void){
+  putchar('S');
   if (current == current->next){      //only one process in queue
     current->time_count = SLICESIZE;
     putchar('R');
     return;
   }
-  putchar('S');
   current->state = READY;
   current->time_count = SLICESIZE;
   current = current->next;

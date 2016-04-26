@@ -118,13 +118,13 @@ irq_handle(struct TrapFrame *tf) {
 				do_syscall(tf);
 				break;
 			case 0x20:
-				disable_interrupt();
-				putchar('.');
+				//disable_interrupt();
+				putchar('t');
 				current->time_count--;
-				if (current->time_count == 0){
+				if (current->time_count <= 0){
 					schedule();
 				}
-				enable_interrupt();
+				//enable_interrupt();
 				break;
 			case 0x2e:
 				break;

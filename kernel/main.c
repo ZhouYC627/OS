@@ -21,10 +21,10 @@ kentry(void) {
 	uint32_t entry = load_umain();
 	init_pcb(entry);
 	//putchar('A');
-	asm volatile("movl %%eax, %%esp" ::"a"(idle.regs.esp));
+	//asm volatile("movl %%eax, %%esp" ::"a"(&idle.regs.esp));
 	enable_interrupt();
 	while(1){
-		//putchar('A');
+		putchar('I');
 		wait_for_interrupt();
 	}
 	///p_idle();
