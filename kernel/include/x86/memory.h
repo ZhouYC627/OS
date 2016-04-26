@@ -38,7 +38,7 @@ struct GateDescriptor {
 };
 
 struct TrapFrame {
-  //uint32_t es, ds;
+  uint32_t es, ds;
 	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;
 	int32_t irq;
 };

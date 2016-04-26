@@ -34,10 +34,11 @@
 
 # 在 ring3 用户空间下发生中断时需保存现场信息, 而陷入内核时要首先设置正确的段寄存器
 asm_do_irq:
+	cli
 	pushal
 
-#	pushl %ds
-#	pushl %es
+	push %ds
+	push %es
 # pushl %fs
 #	pushl %gs
 
@@ -49,10 +50,11 @@ asm_do_irq:
 
 #	popl %gs
 #	popl %fs
-#	popl %es
-#	popl %ds
+	pop %es
+	pop %ds
 
 	popal
 	addl $4, %esp
 
+	sti
 	iret
