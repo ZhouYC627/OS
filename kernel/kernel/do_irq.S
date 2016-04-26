@@ -21,7 +21,7 @@
 .globl vecsys; vecsys: pushl $0x80; jmp asm_do_irq
 .globl irq0;	irq0: pushl $0x20; jmp asm_do_irq
 .globl irq1;	irq1: pushl $0x21; jmp asm_do_irq
-.globl irq14;	irq14: pushl $0x2d; jmp asm_do_irq
+.globl irq14;	irq14: pushl $0x2e; jmp asm_do_irq
 
 .globl irq_empty; irq_empty: pushl $-1; jmp asm_do_irq
 
