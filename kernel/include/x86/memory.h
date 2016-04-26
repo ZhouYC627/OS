@@ -38,6 +38,7 @@ struct GateDescriptor {
 };
 
 struct TrapFrame {
+  uint32_t gs,fs, es, ds;
 	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;
 	int32_t irq;
 };
@@ -68,7 +69,7 @@ typedef struct SegDesc SegDesc;
 {	(lim) & 0xffff, (uint32_t)(base) & 0xffff,                \
 	((uint32_t)(base) >> 16) & 0xff, type, 0, dpl, 1,         \
 	(uint32_t)(lim) >> 16, 0, 0, 1, 0, (uint32_t)(base) >> 24 }
-	
+
 // Task state segment format
 struct TSS {
 	uint32_t link;         // old ts selector
@@ -103,6 +104,6 @@ lldt(uint16_t sel)
 
 static inline void
 ltr(uint16_t sel) {
-	asm volatile("ltr %0" : :"r"(sel)); 
+	asm volatile("ltr %0" : :"r"(sel));
 }
 #endif

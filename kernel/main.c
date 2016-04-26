@@ -2,14 +2,10 @@
 #include "x86.h"
 #include "device.h"
 #include "lib.h"
+#include "schedule.h"
 
 extern void enter_user_space(uint32_t);
-
-void p_idle(){
-	while(1){
-		wait_for_interrupt();
-	}
-}
+extern PCB idle;
 
 //void add_irq_handle(int, void (*)(void));
 
@@ -24,7 +20,14 @@ kentry(void) {
 
 	uint32_t entry = load_umain();
 	init_pcb(entry);
-	p_idle();
+	//putchar('A');
+	asm volatile("movl %%eax, %%esp" ::"a"(idle.regs.esp));
+	enable_interrupt();
+	while(1){
+		//putchar('A');
+		wait_for_interrupt();
+	}
+	///p_idle();
 	//enter_user_space(entry);
 	while(1);
 }

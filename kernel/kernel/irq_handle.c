@@ -91,9 +91,10 @@ irq_handle(struct TrapFrame *tf) {
     /*
      * 中断处理程序
      */
-	asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
+		asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
     int irq = tf->irq;
     switch(irq) {
+			/*
       case 1000:break;
       case 1001:break;
 
@@ -112,16 +113,20 @@ irq_handle(struct TrapFrame *tf) {
 			case 12:	break;
 			case 13:	break;
 			case 14:	break;
-			case 0x2d:
-				break;
+			*/
 			case 0x80:
 				do_syscall(tf);
 				break;
 			case 0x20:
+				disable_interrupt();
+				putchar('.');
 				current->time_count--;
 				if (current->time_count == 0){
 					schedule();
 				}
+				enable_interrupt();
+				break;
+			case 0x2e:
 				break;
    		default:assert(0);
     }

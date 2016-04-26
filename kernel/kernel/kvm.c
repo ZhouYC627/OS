@@ -87,7 +87,6 @@ load_umain(void) {
 	 //gdt[SEG_UCODE].dpl = 3;
 	 //gdt[SEG_UDATA].dpl = 3;
 
-	 		enable_interrupt();
 		 return(elf->entry);
 
 

@@ -23,7 +23,7 @@ os.img:
 	cat bootloader/bootblock kernel/kmain app/umain > os.img
 
 play: os.img
-	#$(call git_commit)
+ #	$(call git_commit)
 	$(QEMU) -serial stdio os.img
 	make clean
 
