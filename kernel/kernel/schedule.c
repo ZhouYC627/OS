@@ -21,11 +21,12 @@ void init_pcb(uint32_t entry){
   pcb_table[P1].time_count = SLICESIZE;
   pcb_table[P1].pid = PID++;
   pcb_table[P1].next = 	(PCB*)&pcb_table[P1];
-  pcb_table[P1].regs.eip = entry;
+  //pcb_table[P1].regs.eip = entry;
   pcb_table[P1].regs.ds = USEL(SEG_UDATA);
+  pcb_table[P1].regs.es = USEL(SEG_UDATA);
   pcb_table[P1].regs.ss = USEL(SEG_UDATA);
   pcb_table[P1].regs.esp = 0x400000;
-  pcb_table[P1].regs.eflags = 0x2;
+  pcb_table[P1].regs.eflags = 0x246;
   pcb_table[P1].regs.cs = USEL(SEG_UCODE);
   pcb_table[P1].regs.eip = entry;
 

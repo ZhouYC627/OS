@@ -45,8 +45,8 @@ asm_do_irq:
 	pushl %esp
 	call irq_handle
 	addl $4, %esp
-#	movl current, %esp
-#	addl $512, %esp
+	movl current, %esp
+	addl $512, %esp
 
 #	popl %gs
 #	popl %fs

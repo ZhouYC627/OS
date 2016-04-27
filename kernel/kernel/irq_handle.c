@@ -92,6 +92,7 @@ irq_handle(struct TrapFrame *tf) {
      * 中断处理程序
      */
 		asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
+		asm volatile("movw %%ax,%%es":: "a" (KSEL(SEG_KDATA)));
     int irq = tf->irq;
     switch(irq) {
 			/*
@@ -130,5 +131,4 @@ irq_handle(struct TrapFrame *tf) {
 				break;
    		default:assert(0);
     }
-	asm volatile("movw %%ax,%%ds":: "a" (USEL(SEG_UDATA)));
 }
