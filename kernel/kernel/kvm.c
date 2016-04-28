@@ -45,7 +45,7 @@ enter_user_space(uint32_t entry) {
      */
 	 asm volatile("movw %%ax,%%ds" :: "a" (USEL(SEG_UDATA)));
 	 asm volatile("pushl %%eax" :: "a"(USEL(SEG_UDATA))); //ss
-	 asm volatile("pushl %%eax" :: "a" (0x400000));	//esp
+	 asm volatile("pushl %%eax" :: "a" (0x200000));	//esp
 	 asm volatile("pushfl");	//eflags;
 	 asm volatile("pushl %%eax" :: "a" (USEL(SEG_UCODE))); //cs
 	 asm volatile("pushl %%eax" :: "a" (entry));	//eip
@@ -84,8 +84,8 @@ load_umain(void) {
      //((void(*)(void))elf->entry)();
      gdt[SEG_UCODE] = SEG(STA_X | STA_R, 0x200000, 0xffffffff, DPL_USER);
      gdt[SEG_UDATA] = SEG(STA_W,         0x200000, 0xffffffff, DPL_USER);
-	 //gdt[SEG_UCODE].dpl = 3;
-	 //gdt[SEG_UDATA].dpl = 3;
+		 gdt[SEG_UCODE].dpl = 3;
+		 gdt[SEG_UDATA].dpl = 3;
 
 		 return(elf->entry);
 

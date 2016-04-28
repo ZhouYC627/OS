@@ -29,7 +29,7 @@ uentry(void){
 	int fpid;
 	fpid = fork();
 	if (fpid != 0){
-		while(1)
+		//while(1)
 		printf("Ping:  %d\n", fpid);
 	}else{
 		printf("Pong:  %d\n", fpid);

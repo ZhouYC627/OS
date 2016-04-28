@@ -7,7 +7,10 @@
 #define NR_HARD_INTR 16
 #define VED_ADDR 0xB8000
 
-uint32_t k_fork();
+void k_fork();
+extern TSS tss;
+extern SegDesc gdt[NR_SEGMENTS];       // the new GDT
+extern PCB *current;
 
 struct IRQ_t{
 	void (*routine)(void);
@@ -58,7 +61,7 @@ int sys_write(int fd, void *buf, int len) {
 	if ((fd==1) || (fd==2)){
 		int i;
 		for (i=0; i<len; i++){
-			ch = ((char*)buf+UADDR)[i];
+			ch = ((char*)buf+PBASE(current->no))[i];
 			putchar(ch);
 			scr_write(ch);
 		}
@@ -84,7 +87,9 @@ void do_syscall(struct TrapFrame *tf){
 			tf->eax = scr_clr();
 			break;
 		case SYS_fork:
-			tf->eax = k_fork();
+			//tf->eax = k_fork();
+			k_fork();
+			tf->eax = current->regs.eax;
 			break;
 		default: assert(0);
 	}
