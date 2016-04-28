@@ -4,5 +4,5 @@
 int vsnprintf(char *buf, int n, const char *fmt, ...);
 int printf(const char *format,...);
 int scr_clr(void);
-
+int fork();
 #endif

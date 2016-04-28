@@ -30,5 +30,5 @@ kentry(void) {
 
 	///p_idle();
 	//enter_user_space(entry);
-	while(1);
+	//while(1);
 }

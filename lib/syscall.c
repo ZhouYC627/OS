@@ -49,3 +49,7 @@ int printf(const char *format,...){
 int scr_clr(){
 	return syscall(SYS_clr, 1, 1, 1);
 }
+
+int fork(){
+	return syscall(SYS_fork, 1, 1, 1);
+}

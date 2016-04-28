@@ -24,7 +24,7 @@ typedef struct p_task_table{
     struct p_task_table* next;
 }PCB;
 
-enum {READY, RUNNING, BLOCKED, DEAD, EMPTY};
+enum {READY, RUNNING, BLOCKED, DEAD, FREE};
 void schedule();
 
 #endif

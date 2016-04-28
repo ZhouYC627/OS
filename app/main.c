@@ -25,6 +25,15 @@ uentry(void){
 	printf("=======================================================\n");
 	printf("Test end!!! Good luck!!!\n");
 	*/
-	printf("ping");
+	printf("\n=======================================================\n");
+	int fpid;
+	fpid = fork();
+	if (fpid != 0){
+		while(1)
+		printf("Ping:  %d\n", fpid);
+	}else{
+		printf("Pong:  %d\n", fpid);
+	}
+
 	while(1);
 }

@@ -1,6 +1,7 @@
 #include "x86.h"
 #include "device.h"
 #include "schedule.h"
+//#include "../../lib/string.h"
 
 
 PCB pcb_table[MAX_PCB];
@@ -10,6 +11,10 @@ unsigned int PID;
 extern TSS tss;
 
 void init_pcb(uint32_t entry){
+  int i;
+  for (i=0; i<MAX_PCB; i++){
+    pcb_table[i].state = FREE;
+  }
   PID = 0;
   idle.pid = PID ++;
   idle.state = RUNNING;
@@ -19,7 +24,7 @@ void init_pcb(uint32_t entry){
   //first process
   pcb_table[P1].state = READY;
   pcb_table[P1].time_count = SLICESIZE;
-  pcb_table[P1].pid = PID++;
+  pcb_table[P1].pid = PID ++;
   pcb_table[P1].next = 	(PCB*)&pcb_table[P1];
   //pcb_table[P1].regs.eip = entry;
   pcb_table[P1].regs.ds = USEL(SEG_UDATA);
@@ -32,6 +37,12 @@ void init_pcb(uint32_t entry){
 
   //return idle.regs.esp;
 
+}
+void memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
+  int i;
+  for (i=0; i<size; i++){
+    *(dst+i) = *(src+i);
+  }
 }
 
 void schedule(void){
@@ -47,4 +58,25 @@ void schedule(void){
   tss.esp0 = (uint32_t)&current->regs + sizeof(stackframe);
   current->state = RUNNING;
   current->time_count = SLICESIZE;
+}
+
+uint32_t k_fork(){
+  PCB *child = current;
+
+  int i = 0;        //find a free pcb
+  for (; i<MAX_PCB; i++){
+    if (pcb_table[i].state == FREE){
+      child = (PCB*)&pcb_table[i];
+      break;
+    }
+  }
+  child->regs = current->regs;
+  child->state = READY;
+  child->time_count = SLICESIZE;
+  child->pid = PID++;
+  memcpy(child->k_stack, current->k_stack, STACKSIZE);
+  child->next = current->next;
+  current->next = child;
+  return child->pid;
+
 }

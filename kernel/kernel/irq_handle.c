@@ -7,6 +7,8 @@
 #define NR_HARD_INTR 16
 #define VED_ADDR 0xB8000
 
+uint32_t k_fork();
+
 struct IRQ_t{
 	void (*routine)(void);
 	struct IRQ_t *next;
@@ -80,6 +82,9 @@ void do_syscall(struct TrapFrame *tf){
 			break;
 		case SYS_clr:
 			tf->eax = scr_clr();
+			break;
+		case SYS_fork:
+			tf->eax = k_fork();
 			break;
 		default: assert(0);
 	}
