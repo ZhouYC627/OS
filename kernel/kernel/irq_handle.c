@@ -7,7 +7,6 @@
 #define NR_HARD_INTR 16
 #define VED_ADDR 0xB8000
 
-void k_fork();
 extern TSS tss;
 extern SegDesc gdt[NR_SEGMENTS];       // the new GDT
 extern PCB *current;
@@ -91,6 +90,9 @@ void do_syscall(struct TrapFrame *tf){
 			k_fork();
 			tf->eax = current->regs.eax;
 			break;
+		case SYS_sleep:
+			k_sleep(tf->ebx);
+			break;
 		default: assert(0);
 	}
 }
@@ -135,6 +137,7 @@ irq_handle(struct TrapFrame *tf) {
 				if (current->time_count == 0){
 					schedule();
 				}
+				//check_sleep();
 				//enable_interrupt();
 				break;
 			case 0x2e:

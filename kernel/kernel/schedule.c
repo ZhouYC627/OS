@@ -6,6 +6,7 @@
 
 PCB pcb_table[MAX_PCB];
 PCB idle, *current = &idle;
+PCB *block = &idle;
 unsigned int PID;
 
 extern TSS tss;
@@ -16,8 +17,10 @@ void init_pcb(uint32_t entry){
   for (i=0; i<MAX_PCB; i++){
     pcb_table[i].state = FREE;
     pcb_table[i].no = i;
+    pcb_table[i].next = NULL;
   }
   PID = 0;
+  //block = NULL;
   idle.pid = PID ++;
   idle.state = RUNNING;
   idle.time_count = SLICESIZE;
@@ -89,5 +92,48 @@ void k_fork(){
   child->regs.eax = 0;
   current->regs.eax = child->pid;
   //return child->pid;
+}
 
+void k_sleep(int t){
+  current->state = BLOCKED;
+  current->sleep_time = t * 1000;
+  //current->time_count = 1;
+  PCB *p = current;
+  while (p->next != current){
+    p = p->next;
+  }
+  p->next = current->next;
+  current->next = block;
+  block = current;
+  current = p;
+  if (current == block){  //no runnable process
+    current = &idle;
+    current->next = current;
+  }
+  schedule();
+
+}
+void check_sleep(){
+  PCB *p = block;
+  while (p!=NULL){
+    p->sleep_time--;
+    if (p->sleep_time == 0){
+      p->state = READY;
+      p->time_count = SLICESIZE;
+      PCB *q = block;
+      if (p == block){
+        block = p->next;
+      }else{
+        while(q->next != p){
+          q = q->next;
+        }
+        q->next = p->next;
+      }
+      p->next = current->next;
+      current->next = p;
+      p = q;
+    }
+    if (p == NULL) break;
+    p = p->next;
+  }
 }

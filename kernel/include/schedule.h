@@ -30,5 +30,8 @@ typedef struct p_task_table{
 
 enum {READY, RUNNING, BLOCKED, DEAD, FREE};
 void schedule();
+void check_sleep();
+void k_fork();
+void k_sleep(int);
 
 #endif

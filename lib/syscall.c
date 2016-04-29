@@ -53,3 +53,7 @@ int scr_clr(){
 int fork(){
 	return syscall(SYS_fork, 1, 1, 1);
 }
+
+void sleep(int t){
+	syscall(SYS_sleep, t, 1, 1);
+}
