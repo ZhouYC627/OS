@@ -6,7 +6,7 @@
 
 PCB pcb_table[MAX_PCB];
 PCB idle, *current = &idle;
-PCB *block = &idle;
+PCB *block;
 unsigned int PID;
 
 extern TSS tss;
@@ -17,10 +17,10 @@ void init_pcb(uint32_t entry){
   for (i=0; i<MAX_PCB; i++){
     pcb_table[i].state = FREE;
     pcb_table[i].no = i;
-    pcb_table[i].next = NULL;
+    //pcb_table[i].next = NULL;
   }
+  block = NULL;
   PID = 0;
-  //block = NULL;
   idle.pid = PID ++;
   idle.state = RUNNING;
   idle.time_count = SLICESIZE;
