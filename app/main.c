@@ -32,18 +32,17 @@ uentry(void){
 		int count = 0;
 		while(count < 5){
 			count ++;
-			printf("Ping:  %d\n", fpid);
-			sleep(1);
+			printf("Ping!  pid:%d\n", fpid);
+			sleep(1000);
 		}
 	}else{
-		sleep(1);
+		sleep(100);
 		int count = 0;
 		while(count < 5){
 			count ++;
-			printf("Pong:  %d\n", fpid);
-			sleep(1);
+			printf("Pong!  pid:%d\n", fpid);
+			sleep(1000);
 		}
 	}
-
 	while(1);
 }

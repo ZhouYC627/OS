@@ -118,7 +118,7 @@ void k_fork(){
 
 void k_sleep(int t){
   current->state = BLOCKED;
-  current->sleep_time = t * 100;
+  current->sleep_time = t/10;
   //num_of_ready--;
   //current->time_count = 1;
   /*
