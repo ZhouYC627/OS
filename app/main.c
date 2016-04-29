@@ -29,10 +29,20 @@ uentry(void){
 	int fpid;
 	fpid = fork();
 	if (fpid != 0){
-		//while(1)
-		printf("Ping:  %d\n", fpid);
+		int count = 0;
+		while(count < 5){
+			count ++;
+			printf("Ping:  %d\n", fpid);
+			sleep(1);
+		}
 	}else{
-		printf("Pong:  %d\n", fpid);
+		sleep(1);
+		int count = 0;
+		while(count < 5){
+			count ++;
+			printf("Pong:  %d\n", fpid);
+			sleep(1);
+		}
 	}
 
 	while(1);

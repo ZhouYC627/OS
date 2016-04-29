@@ -137,7 +137,7 @@ irq_handle(struct TrapFrame *tf) {
 				if (current->time_count == 0){
 					schedule();
 				}
-				//check_sleep();
+				check_sleep();
 				enable_interrupt();
 				break;
 			case 0x2e:

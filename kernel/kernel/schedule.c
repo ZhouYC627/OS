@@ -6,6 +6,7 @@
 
 PCB pcb_table[MAX_PCB];
 PCB idle, *current = &idle;
+//int num_of_ready = 0;
 //PCB *block = &idle;
 unsigned int PID;
 
@@ -23,6 +24,7 @@ void init_pcb(uint32_t entry){
 
   //block->state = BLOCKED;
   //block->next = block;
+  //idle.no = -1;
   idle.pid = PID++;
   idle.state = RUNNING;
   idle.time_count = SLICESIZE;
@@ -52,20 +54,34 @@ void memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
 }
 
 void schedule(void){
-  if (current == current->next){      //only one process in queue
+  /*if (current == current->next && current->state == RUNNING){      //only one process in queue
     current->time_count = SLICESIZE;
     putchar('R');
     return;
-  }
+  }*/
   putchar('S');
-  putchar(current->next->pid +'0');
-  current->state = READY;
-  current->time_count = SLICESIZE;
-  current = current->next;
-  while (current->state != READY){
-    current = current->next;
+  if (current->state == RUNNING){
+    current->state = READY;
+    current->time_count = SLICESIZE;
   }
-
+  PCB *p = current->next;
+  while(p->state != READY){
+      if (p == current){
+        p = &idle;
+        p->next = p;
+      }
+      p = p->next;
+  }
+  current = p;
+  putchar(current->pid +'0');
+  /*if (num_of_ready == 0){
+    current = &idle;
+    current->next = current;
+  }else{
+      while (current->state != READY){
+        current = current->next;
+      }
+  }*/
   tss.esp0 = (uint32_t)&current->regs + sizeof(stackframe);
   current->state = RUNNING;
   current->time_count = SLICESIZE;
@@ -85,6 +101,7 @@ void k_fork(){
       break;
     }
   }
+  //num_of_ready++;
   child->regs = current->regs;
   child->state = READY;
   child->time_count = SLICESIZE;
@@ -102,6 +119,7 @@ void k_fork(){
 void k_sleep(int t){
   current->state = BLOCKED;
   current->sleep_time = t * 100;
+  //num_of_ready--;
   //current->time_count = 1;
   /*
   PCB *p = current;
@@ -121,13 +139,28 @@ void k_sleep(int t){
 }
 
 void check_sleep(){
-  PCB *p = current;
-  do{
+  //PCB *p = current;
+  int i;
+  //int count =0;
+  //if (current == &idle) return;
+  for(i=0; i< MAX_PCB; i++){
+    //if (p == p->next && p->state ==READY) break;
+    //if (count++ > num_of_ready) break;
+    PCB *p = (PCB*)&pcb_table[i];
+    if (p->state == BLOCKED && p->sleep_time==0){
+      putchar('R');
+      putchar(p->pid + '0');
+      p->state = READY;
+      p->time_count = SLICESIZE;
+      if (current == &idle){
+        current->next = p;
+      }
+      //num_of_ready++;
+      }
     if (p->state == BLOCKED){
       p->sleep_time--;
     }
-    p = p->next;
-  }while(p == current);
+  }
 }
   /*
   PCB *p = block->next;

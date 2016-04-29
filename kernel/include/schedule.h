@@ -4,7 +4,7 @@
 #define MAX_PCB 10
 #define STACKSIZE 512
 #define SLICESIZE 10
-#define P1
+#define P1 0
 
 #define PBASE(i) ((i+1) * 0x200000)
 #define USEL(desc) (((desc) << 3) | DPL_USER)
@@ -28,7 +28,7 @@ typedef struct p_task_table{
     struct p_task_table* next;
 }PCB;
 
-enum {READY, RUNNING, BLOCKED, DEAD, FREE};
+enum {READY, RUNNING, BLOCKED, FREE};
 void schedule();
 void check_sleep();
 void k_fork();
