@@ -6,7 +6,7 @@
 
 PCB pcb_table[MAX_PCB];
 PCB idle, *current = &idle;
-PCB *block;
+//PCB *block = &idle;
 unsigned int PID;
 
 extern TSS tss;
@@ -17,11 +17,13 @@ void init_pcb(uint32_t entry){
   for (i=0; i<MAX_PCB; i++){
     pcb_table[i].state = FREE;
     pcb_table[i].no = i;
-    //pcb_table[i].next = NULL;
+    //pcb_table[i].next = 0;
   }
-  block = NULL;
   PID = 0;
-  idle.pid = PID ++;
+
+  //block->state = BLOCKED;
+  //block->next = block;
+  idle.pid = PID++;
   idle.state = RUNNING;
   idle.time_count = SLICESIZE;
   idle.next = (PCB*)&pcb_table[P1];
@@ -29,7 +31,7 @@ void init_pcb(uint32_t entry){
   //first process
   pcb_table[P1].state = READY;
   pcb_table[P1].time_count = SLICESIZE;
-  pcb_table[P1].pid = PID ++;
+  pcb_table[P1].pid = PID++;
   pcb_table[P1].next = 	(PCB*)&pcb_table[P1];
   //pcb_table[P1].regs.eip = entry;
   pcb_table[P1].regs.ds = USEL(SEG_UDATA);
@@ -39,10 +41,9 @@ void init_pcb(uint32_t entry){
   pcb_table[P1].regs.eflags = 0x246;
   pcb_table[P1].regs.cs = USEL(SEG_UCODE);
   pcb_table[P1].regs.eip = entry;
-
   //return idle.regs.esp;
-
 }
+
 void memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
   int i;
   for (i=0; i<=size; i++){
@@ -61,6 +62,10 @@ void schedule(void){
   current->state = READY;
   current->time_count = SLICESIZE;
   current = current->next;
+  while (current->state != READY){
+    current = current->next;
+  }
+
   tss.esp0 = (uint32_t)&current->regs + sizeof(stackframe);
   current->state = RUNNING;
   current->time_count = SLICESIZE;
@@ -96,8 +101,9 @@ void k_fork(){
 
 void k_sleep(int t){
   current->state = BLOCKED;
-  current->sleep_time = t * 1000;
+  current->sleep_time = t * 100;
   //current->time_count = 1;
+  /*
   PCB *p = current;
   while (p->next != current){
     p = p->next;
@@ -109,13 +115,23 @@ void k_sleep(int t){
   if (current == block){  //no runnable process
     current = &idle;
     current->next = current;
-  }
+  }*/
   schedule();
 
 }
+
 void check_sleep(){
-  PCB *p = block;
-  while (p!=NULL){
+  PCB *p = current;
+  do{
+    if (p->state == BLOCKED){
+      p->sleep_time--;
+    }
+    p = p->next;
+  }while(p == current);
+}
+  /*
+  PCB *p = block->next;
+  while (p!=block){
     p->sleep_time--;
     if (p->sleep_time == 0){
       p->state = READY;
@@ -136,4 +152,4 @@ void check_sleep(){
     if (p == NULL) break;
     p = p->next;
   }
-}
+  */

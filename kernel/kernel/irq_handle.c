@@ -131,14 +131,14 @@ irq_handle(struct TrapFrame *tf) {
 				do_syscall(tf);
 				break;
 			case 0x20:
-				//disable_interrupt();
+				disable_interrupt();
 				putchar('.');
 				current->time_count--;
 				if (current->time_count == 0){
 					schedule();
 				}
 				//check_sleep();
-				//enable_interrupt();
+				enable_interrupt();
 				break;
 			case 0x2e:
 				break;

@@ -32,9 +32,9 @@ void bootmain(void)
 	//while(1);
 	elf = (void *)L_A;
 	ramdisk_read((void *)elf, 0, 4096);
-	
+
 	//ph=(void*)elf + elf->phoff;
-	
+
 	for (i=0; i < elf->phnum; i++){
 		/* Scan the program header table, load each segment into memory */
 		ph = (void*)elf + elf->phoff+(elf->phentsize) * i;
@@ -62,11 +62,12 @@ void bootmain(void)
 	//char s2[]="Back to boot.";
 	*/
 	((void(*)(void))elf->entry)();
-
+/*
 	s[0] = 0x6b636142;
 	s[1] = 0x206f7420;
 	s[2] = 0x746f6f42;
 	print_s((char *)s, 11);
+*/
 	while(1);
 }
 
@@ -101,4 +102,3 @@ void ramdisk_read(char *buf, int offset, int len){
 		readsect(buf , se);
 	}
 }
-

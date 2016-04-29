@@ -4,7 +4,7 @@
 #define MAX_PCB 10
 #define STACKSIZE 512
 #define SLICESIZE 10
-#define P1 0
+#define P1
 
 #define PBASE(i) ((i+1) * 0x200000)
 #define USEL(desc) (((desc) << 3) | DPL_USER)
