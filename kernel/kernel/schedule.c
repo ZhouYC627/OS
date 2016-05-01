@@ -53,6 +53,12 @@ void memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
   }
 }
 
+void memset(unsigned char* dst, char c, uint32_t size){
+  int i;
+  for (i=0; i<=size; i++){
+    *(dst+i) = c;
+  }
+}
 void schedule(void){
   /*if (current == current->next && current->state == RUNNING){      //only one process in queue
     current->time_count = SLICESIZE;
@@ -119,21 +125,7 @@ void k_fork(){
 void k_sleep(int t){
   current->state = BLOCKED;
   current->sleep_time = t/10;
-  //num_of_ready--;
-  //current->time_count = 1;
-  /*
-  PCB *p = current;
-  while (p->next != current){
-    p = p->next;
-  }
-  p->next = current->next;
-  current->next = block;
-  block = current;
-  current = p;
-  if (current == block){  //no runnable process
-    current = &idle;
-    current->next = current;
-  }*/
+
   schedule();
 
 }
@@ -162,27 +154,22 @@ void check_sleep(){
     }
   }
 }
-  /*
-  PCB *p = block->next;
-  while (p!=block){
-    p->sleep_time--;
-    if (p->sleep_time == 0){
-      p->state = READY;
-      p->time_count = SLICESIZE;
-      PCB *q = block;
-      if (p == block){
-        block = p->next;
-      }else{
-        while(q->next != p){
-          q = q->next;
-        }
-        q->next = p->next;
-      }
-      p->next = current->next;
-      current->next = p;
-      p = q;
-    }
-    if (p == NULL) break;
+
+void k_exit(){
+  current->state = FREE;
+  memset(current->k_stack, 0, STACKSIZE);
+  memset((void*)PBASE(current->no), 0, 0x200000);
+  PCB *p = current;
+  while (p->next != current){
     p = p->next;
   }
-  */
+  p->next = current->next;
+  if (current == current->next){ //idle
+    current = &idle;
+    current->next = current;
+  }else{
+    current = p;
+  }
+  schedule();
+
+}

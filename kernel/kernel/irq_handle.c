@@ -93,6 +93,9 @@ void do_syscall(struct TrapFrame *tf){
 		case SYS_sleep:
 			k_sleep(tf->ebx);
 			break;
+		case SYS_exit:
+			k_exit();
+			break;
 		default: assert(0);
 	}
 }
