@@ -82,7 +82,7 @@ void do_syscall(struct TrapFrame *tf){
 		//case SYS_brk:  tf->eax = 0; break;
 		case SYS_exit:
 			//tf->eax = k_exit();
-			putchar('E');
+			//putchar('E');
 			if (k_exit() == 0){
 				//scr_write('E');
 				char s[] = "\nRunning idle...\n";
@@ -145,7 +145,8 @@ irq_handle(struct TrapFrame *tf) {
 				break;
 			case 0x20:
 				disable_interrupt();
-				putchar('.');
+			  putchar('.');
+				//scr_write('^');
 				current->time_count--;
 				if (current->time_count == 0){
 					schedule();
