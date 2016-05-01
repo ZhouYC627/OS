@@ -26,25 +26,22 @@ uentry(void){
 	printf("Test end!!! Good luck!!!\n");
 	*/
 	//printf("\n=======================================================\n");
-	int fpid;
+	int fpid, count = 0;
 	fpid = fork();
 	if (fpid != 0){
-		int count = 0;
 		while(count < 5){
 			count ++;
 			printf("Ping!   %d\n", fpid);
 			sleep(1000);
 		}
-		p_exit();
 	}else{
 		sleep(100);
-		int count = 0;
 		while(count < 5){
 			count ++;
 			printf("Pong!   %d\n", fpid);
 			sleep(1000);
 		}
-		p_exit();
 	}
+	p_exit();
 	while(1);
 }

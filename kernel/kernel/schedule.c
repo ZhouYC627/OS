@@ -53,21 +53,21 @@ void k_memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
     *(dst+i) = *(src+i);
   }
 }
-/*
+
 void k_memset(unsigned char* dst, char c, uint32_t size){
   int i;
-  for (i=0; i<=size; i++){
+  for (i=0; i<size; i++){
     *(dst+i) = c;
   }
 }
-*/
+
 void schedule(void){
   /*if (current == current->next && current->state == RUNNING){      //only one process in queue
     current->time_count = SLICESIZE;
     putchar('R');
     return;
   }*/
-  putchar('S');
+  //putchar('S');
   if (current->state == RUNNING){
     current->state = READY;
     current->time_count = SLICESIZE;
@@ -81,7 +81,7 @@ void schedule(void){
       p = p->next;
   }
   current = p;
-  putchar(current->pid +'0');
+  //putchar(current->pid +'0');
   /*if (num_of_ready == 0){
     current = &idle;
     current->next = current;
@@ -105,7 +105,7 @@ void k_fork(){
   for (; i<MAX_PCB; i++){
     if (pcb_table[i].state == FREE){
       child = (PCB*)&pcb_table[i];
-      putchar(i+'0');
+      //putchar(i+'0');
       break;
     }
   }
@@ -142,8 +142,8 @@ void check_sleep(){
     //if (count++ > num_of_ready) break;
     PCB *p = (PCB*)&pcb_table[i];
     if (p->state == BLOCKED && p->sleep_time==0){
-      putchar('R');
-      putchar(p->pid + '0');
+      //putchar('R');
+      //putchar(p->pid + '0');
       p->state = READY;
       p->time_count = SLICESIZE;
       if (current == &idle){
@@ -161,7 +161,7 @@ int k_exit(){
   int re = 0;
   current->state = FREE;
   //k_memset(current->k_stack, 0, STACKSIZE);
-  //k_memset((void*)PBASE(current->no), 0, 0x200000);
+  k_memset((void*)PBASE(current->no), 0, 0x200000);
   PCB *p = current;
   while (p->next != current){
     p = p->next;

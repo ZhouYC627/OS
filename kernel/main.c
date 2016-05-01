@@ -24,7 +24,7 @@ kentry(void) {
 	asm volatile("movl %%eax, %%esp" ::"a"(&idle.regs.esp));
 	enable_interrupt();
 	while(1){
-		//putchar('I');
+		//putchar('^');
 		wait_for_interrupt();
 	}
 
