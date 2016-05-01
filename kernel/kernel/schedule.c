@@ -155,11 +155,11 @@ void check_sleep(){
     }
   }
 }
-/*
+
 void k_exit(){
   current->state = FREE;
-  k_memset(current->k_stack, 0, STACKSIZE);
-  k_memset((void*)PBASE(current->no), 0, 0x200000);
+  //k_memset(current->k_stack, 0, STACKSIZE);
+  //k_memset((void*)PBASE(current->no), 0, 0x200000);
   PCB *p = current;
   while (p->next != current){
     p = p->next;
@@ -174,4 +174,3 @@ void k_exit(){
   schedule();
 
 }
-*/

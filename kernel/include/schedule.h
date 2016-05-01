@@ -33,6 +33,6 @@ void schedule();
 void check_sleep();
 void k_fork();
 void k_sleep(int);
-//void k_exit();
+void k_exit();
 
 #endif

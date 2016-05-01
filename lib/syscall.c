@@ -57,8 +57,7 @@ int fork(){
 void sleep(int t){
 	syscall(SYS_sleep, t, 1, 1);
 }
-/*
+
 void p_exit(){
 	syscall(10, 1, 1, 1);
 }
-*/
