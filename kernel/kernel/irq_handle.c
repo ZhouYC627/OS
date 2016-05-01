@@ -42,7 +42,7 @@ void scr_write(char c){
 		if (c == '\n') return;
 	}
 	int *p = (void *)VED_ADDR + (80 * row + column)*2;
-	*p = 0x0f00 | c;
+	*p = 0x0a00 | c;
 	column++;
 
 }
@@ -78,24 +78,34 @@ void do_syscall(struct TrapFrame *tf){
 			enable_interrupt();
 			break;
 
+
 		//case SYS_brk:  tf->eax = 0; break;
-		case SYS_write:
-			tf->eax = sys_write(tf->ebx, (void*)tf->ecx, tf->edx);
-			break;
-		case SYS_clr:
-			tf->eax = scr_clr();
+		case SYS_exit:
+			//tf->eax = k_exit();
+			putchar('E');
+			if (k_exit() == 0){
+				//scr_write('E');
+				char s[] = "\nRunning idle...\n";
+				sys_write(1, s, 16);
+			}
+			//assert(0);
 			break;
 		case SYS_fork:
 			//tf->eax = k_fork();
 			k_fork();
 			tf->eax = current->regs.eax;
 			break;
+		case SYS_write:
+				tf->eax = sys_write(tf->ebx, (void*)tf->ecx, tf->edx);
+				break;
+
 		case SYS_sleep:
 			k_sleep(tf->ebx);
 			break;
-		case SYS_exit:
-			k_exit();
-			break;
+
+		case SYS_clr:
+				tf->eax = scr_clr();
+				break;
 		default: assert(0);
 	}
 }
@@ -110,7 +120,7 @@ irq_handle(struct TrapFrame *tf) {
 		asm volatile("movw %%ax,%%es":: "a" (KSEL(SEG_KDATA)));
     int irq = tf->irq;
     switch(irq) {
-			/*
+
       case 1000:break;
       case 1001:break;
 
@@ -129,7 +139,7 @@ irq_handle(struct TrapFrame *tf) {
 			case 12:	break;
 			case 13:	break;
 			case 14:	break;
-			*/
+
 			case 0x80:
 				do_syscall(tf);
 				break;
@@ -142,6 +152,8 @@ irq_handle(struct TrapFrame *tf) {
 				}
 				check_sleep();
 				enable_interrupt();
+				break;
+			case 0x21:
 				break;
 			case 0x2e:
 				break;

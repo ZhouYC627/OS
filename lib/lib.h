@@ -5,6 +5,6 @@ int vsnprintf(char *buf, int n, const char *fmt, ...);
 int printf(const char *format,...);
 int scr_clr(void);
 int fork();
-void sleep(int);
 void p_exit();
+void sleep(int);
 #endif

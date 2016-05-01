@@ -29,6 +29,7 @@ void init_pcb(uint32_t entry){
   idle.state = RUNNING;
   idle.time_count = SLICESIZE;
   idle.next = (PCB*)&pcb_table[P1];
+  idle.no = -1;
 
   //first process
   pcb_table[P1].state = READY;
@@ -40,7 +41,7 @@ void init_pcb(uint32_t entry){
   pcb_table[P1].regs.es = USEL(SEG_UDATA);
   pcb_table[P1].regs.ss = USEL(SEG_UDATA);
   pcb_table[P1].regs.esp = 0x200000;
-  pcb_table[P1].regs.eflags = 0x246;
+  pcb_table[P1].regs.eflags = 0x2;
   pcb_table[P1].regs.cs = USEL(SEG_UCODE);
   pcb_table[P1].regs.eip = entry;
   //return idle.regs.esp;
@@ -48,7 +49,7 @@ void init_pcb(uint32_t entry){
 
 void k_memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
   int i;
-  for (i=0; i<=size; i++){
+  for (i=0; i<size; i++){
     *(dst+i) = *(src+i);
   }
 }
@@ -156,7 +157,8 @@ void check_sleep(){
   }
 }
 
-void k_exit(){
+int k_exit(){
+  int re = 0;
   current->state = FREE;
   //k_memset(current->k_stack, 0, STACKSIZE);
   //k_memset((void*)PBASE(current->no), 0, 0x200000);
@@ -168,9 +170,12 @@ void k_exit(){
   if (current == current->next){ //idle
     current = &idle;
     current->next = current;
+    re = 0;
   }else{
     current = p;
+    re = 1;
   }
   schedule();
-
+  //putchar('e');
+  return re;
 }

@@ -1,5 +1,5 @@
-#ifndef __SCHEDULE_H
-#define __SCHEDULE_H
+#ifndef __SCHEDULE_H__
+#define __SCHEDULE_H__
 
 #define MAX_PCB 10
 #define STACKSIZE 512
@@ -32,7 +32,7 @@ enum {READY, RUNNING, BLOCKED, FREE};
 void schedule();
 void check_sleep();
 void k_fork();
+int k_exit();
 void k_sleep(int);
-void k_exit();
 
 #endif

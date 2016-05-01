@@ -54,10 +54,16 @@ int fork(){
 	return syscall(SYS_fork, 1, 1, 1);
 }
 
-void sleep(int t){
-	syscall(SYS_sleep, t, 1, 1);
+void p_exit(){
+	/*int pnum = syscall(SYS_exit, 1, 1, 1);
+	if (pnum == 0){
+		printf("Running idle...\n");
+	}else{
+		printf("exit:%d", pnum);
+	}*/
+	syscall(SYS_exit, 1, 1, 1);
 }
 
-void p_exit(){
-	syscall(10, 1, 1, 1);
+void sleep(int t){
+	syscall(SYS_sleep, t, 1, 1);
 }
