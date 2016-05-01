@@ -6,5 +6,5 @@ int printf(const char *format,...);
 int scr_clr(void);
 int fork();
 void sleep(int);
-void exit();
+//void p_exit();
 #endif

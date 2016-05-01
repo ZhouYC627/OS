@@ -46,19 +46,20 @@ void init_pcb(uint32_t entry){
   //return idle.regs.esp;
 }
 
-void memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
+void k_memcpy(unsigned char* dst, unsigned char* src, uint32_t size){
   int i;
   for (i=0; i<=size; i++){
     *(dst+i) = *(src+i);
   }
 }
-
-void memset(unsigned char* dst, char c, uint32_t size){
+/*
+void k_memset(unsigned char* dst, char c, uint32_t size){
   int i;
   for (i=0; i<=size; i++){
     *(dst+i) = c;
   }
 }
+*/
 void schedule(void){
   /*if (current == current->next && current->state == RUNNING){      //only one process in queue
     current->time_count = SLICESIZE;
@@ -112,8 +113,8 @@ void k_fork(){
   child->state = READY;
   child->time_count = SLICESIZE;
   child->pid = PID ++;
-  memcpy(child->k_stack, current->k_stack, STACKSIZE);
-  memcpy((unsigned char*)PBASE(child->no), (unsigned char*)PBASE(current->no), 0x200000);
+  k_memcpy(child->k_stack, current->k_stack, STACKSIZE);
+  k_memcpy((unsigned char*)PBASE(child->no), (unsigned char*)PBASE(current->no), 0x200000);
   child->next = current->next;
   current->next = child;
   //current->time_count = 1;
@@ -154,11 +155,11 @@ void check_sleep(){
     }
   }
 }
-
+/*
 void k_exit(){
   current->state = FREE;
-  memset(current->k_stack, 0, STACKSIZE);
-  memset((void*)PBASE(current->no), 0, 0x200000);
+  k_memset(current->k_stack, 0, STACKSIZE);
+  k_memset((void*)PBASE(current->no), 0, 0x200000);
   PCB *p = current;
   while (p->next != current){
     p = p->next;
@@ -173,3 +174,4 @@ void k_exit(){
   schedule();
 
 }
+*/

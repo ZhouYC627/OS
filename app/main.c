@@ -35,7 +35,7 @@ uentry(void){
 			printf("Ping!  pid:%d\n", fpid);
 			sleep(1000);
 		}
-		exit();
+		//p_exit();
 	}else{
 		sleep(100);
 		int count = 0;
@@ -44,7 +44,7 @@ uentry(void){
 			printf("Pong!  pid:%d\n", fpid);
 			sleep(1000);
 		}
-		exit();
+		//p_exit();
 	}
 	while(1);
 }
