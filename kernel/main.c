@@ -18,6 +18,8 @@ kentry(void) {
 	init_intr();
 	init_seg();
 
+	//getKeyCode();
+
 	uint32_t entry = load_umain();
 	init_pcb(entry);
 	//putchar('A');

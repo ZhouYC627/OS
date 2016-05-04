@@ -10,6 +10,8 @@
 void init_seg(void);
 uint32_t load_umain(void);
 void init_timer(void);
+unsigned int getKeyCode();
+unsigned int trans_key();
 void init_pcb(uint32_t);
 
 #endif

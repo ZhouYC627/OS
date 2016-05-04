@@ -119,6 +119,7 @@ irq_handle(struct TrapFrame *tf) {
 		asm volatile("movw %%ax,%%ds":: "a" (KSEL(SEG_KDATA)));
 		asm volatile("movw %%ax,%%es":: "a" (KSEL(SEG_KDATA)));
     int irq = tf->irq;
+		char ch;
     switch(irq) {
 
       case 1000:break;
@@ -155,6 +156,11 @@ irq_handle(struct TrapFrame *tf) {
 				enable_interrupt();
 				break;
 			case 0x21:
+				ch = trans_key(getKeyCode());
+				if (ch != -1)	{
+					scr_write(ch);
+				}
+				//putchar('A' + getKeyCode() - 0x1e);
 				break;
 			case 0x2e:
 				break;
