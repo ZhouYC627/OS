@@ -7,4 +7,7 @@ int scr_clr(void);
 int fork();
 void p_exit();
 void sleep(int);
+void createSem(int);
+void lockSem(int);
+void unlockSem(int);
 #endif

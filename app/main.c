@@ -28,18 +28,22 @@ uentry(void){
 	//printf("\n=======================================================\n");
 	int fpid, count = 0;
 	fpid = fork();
+	int s=0;
+
 	if (fpid != 0){
+		createSem(s);
 		while(count < 5){
+			unlockSem(s);
 			count ++;
 			printf("Ping!   %d\n", fpid);
 			sleep(1000);
 		}
 	}else{
-		sleep(100);
 		while(count < 5){
+			lockSem(s);
 			count ++;
 			printf("Pong!   %d\n", fpid);
-			sleep(1000);
+			//sleep(1000);
 		}
 	}
 	p_exit();

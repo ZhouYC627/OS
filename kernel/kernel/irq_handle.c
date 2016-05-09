@@ -10,6 +10,7 @@
 extern TSS tss;
 extern SegDesc gdt[NR_SEGMENTS];       // the new GDT
 extern PCB *current;
+semaphore *s;
 
 struct IRQ_t{
 	void (*routine)(void);
@@ -106,6 +107,15 @@ void do_syscall(struct TrapFrame *tf){
 		case SYS_clr:
 				tf->eax = scr_clr();
 				break;
+		case SEM_create:
+			createSem(s);
+			break;
+		case SEM_lock:
+			lockSem(s);
+			break;
+		case SEM_unlock:
+			unlockSem(s);
+			break;
 		default: assert(0);
 	}
 }

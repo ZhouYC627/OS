@@ -8,6 +8,10 @@
 #define SYS_open 5
 #define SYS_close 6
 #define SYS_sleep 7
+#define SEM_create 8
+#define SEM_lock 9
+#define SEM_unlock 10
+#define SEM_destory 11
 
 #define SYS_clr 200
 

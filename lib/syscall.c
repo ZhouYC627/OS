@@ -55,15 +55,25 @@ int fork(){
 }
 
 void p_exit(){
-	/*int pnum = syscall(SYS_exit, 1, 1, 1);
-	if (pnum == 0){
-		printf("Running idle...\n");
-	}else{
-		printf("exit:%d", pnum);
-	}*/
 	syscall(SYS_exit, 1, 1, 1);
 }
 
 void sleep(int t){
 	syscall(SYS_sleep, t, 1, 1);
+}
+
+void createSem(int s){
+	syscall(SEM_create, s, 1, 1);
+}
+
+void lockSem(int s){
+	syscall(SEM_lock, s, 1, 1);
+}
+
+void unlockSem(int s) {
+	syscall(SEM_unlock, s, 1, 1);
+}
+
+void desroySem(int s){
+	syscall(SEM_destory, s, 1, 1);
 }

@@ -1,6 +1,8 @@
 #ifndef __SCHEDULE_H__
 #define __SCHEDULE_H__
 
+#include "pv.h"
+
 #define MAX_PCB 10
 #define STACKSIZE 512
 #define SLICESIZE 10
@@ -23,6 +25,7 @@ typedef struct p_task_table{
     int time_count;
     int sleep_time;
     unsigned int pid;
+    semaphore *sem;
     int no;
     //char name[32];
     struct p_task_table* next;
