@@ -10,5 +10,6 @@ typedef struct s_semaphore{
 void createSem(semaphore*);
 void lockSem(semaphore*);
 void unlockSem(semaphore*);
+void destorySem(semaphore*);
 
 #endif

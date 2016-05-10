@@ -74,6 +74,6 @@ void unlockSem(int s) {
 	syscall(SEM_unlock, s, 1, 1);
 }
 
-void desroySem(int s){
+void destorySem(int s){
 	syscall(SEM_destory, s, 1, 1);
 }

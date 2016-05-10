@@ -38,6 +38,7 @@ uentry(void){
 			printf("Ping!   %d\n", fpid);
 			sleep(1000);
 		}
+		destorySem(s);
 	}else{
 		while(count < 5){
 			lockSem(s);

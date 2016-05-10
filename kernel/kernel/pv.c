@@ -19,7 +19,7 @@ void lockSem(semaphore *s){
     ss --;
     if(ss < 0){
       s->list = current;
-      current->sleep_time = 2000000000;
+      current->sleep_time = -1;
       current->state = BLOCKED;
       schedule();
     }
@@ -36,4 +36,9 @@ void unlockSem(semaphore *s){
       //schedule();
     }
         //R(s->list);
+}
+
+void destorySem(semaphore *s){
+  s->value = 0;
+  s->list = NULL;
 }

@@ -86,7 +86,7 @@ void do_syscall(struct TrapFrame *tf){
 			//putchar('E');
 			if (k_exit() == 0){
 				//scr_write('E');
-				char s[] = "\nRunning idle...\n";
+				char s[] = "\nRunning idle...\n\n";
 				sys_write(1, s, 16);
 			}
 			//assert(0);
@@ -115,6 +115,9 @@ void do_syscall(struct TrapFrame *tf){
 			break;
 		case SEM_unlock:
 			unlockSem(s);
+			break;
+		case SEM_destory:
+			destorySem(s);
 			break;
 		default: assert(0);
 	}

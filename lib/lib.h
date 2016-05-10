@@ -10,4 +10,5 @@ void sleep(int);
 void createSem(int);
 void lockSem(int);
 void unlockSem(int);
+void destorySem(int);
 #endif
