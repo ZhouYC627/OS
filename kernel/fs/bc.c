@@ -14,16 +14,16 @@ diskaddr(uint32_t blockno)
 bool
 va_is_mapped(void *va)
 {
-	//return (vpd[PDX(va)] & PTE_P) && (vpt[PGNUM(va)] & PTE_P);
 	return 1;
+	//return (vpd[PDX(va)] & PTE_P) && (vpt[PGNUM(va)] & PTE_P);
 }
 
 // Is this virtual address dirty?
 bool
 va_is_dirty(void *va)
 {
+	return 0;
 	//return (vpt[PGNUM(va)] & PTE_D) != 0;
-	return 1;
 }
 
 // Fault any disk block that is read or written in to memory by
@@ -35,10 +35,10 @@ bc_pgfault(struct UTrapframe *utf)
 	void *addr = (void *) utf->utf_fault_va;
 	uint32_t blockno = ((uint32_t)addr - DISKMAP) / BLKSIZE;
 	//int r;
-    envid_t envid;
-    void *blkaddr;
-    envid = thisenv->env_id;
-    blkaddr = ROUNDDOWN(addr, PGSIZE);
+    //envid_t envid;
+    //void *blkaddr;
+    //envid = 0;//thisenv->env_id;
+    //blkaddr = ROUNDDOWN(addr, PGSIZE);
 
 	// Check that the fault was within the block cache region
 	if (addr < (void*)DISKMAP || addr >= (void*)(DISKMAP + DISKSIZE))
@@ -55,6 +55,7 @@ bc_pgfault(struct UTrapframe *utf)
 	// the page dirty).
 	//
 	// LAB 5: Your code here
+    /*
     if (sys_page_alloc(envid, blkaddr, PTE_SYSCALL) < 0) {
         panic("bg_pgfault: can't allocate new page for disk block\n");
     }
@@ -66,7 +67,7 @@ bc_pgfault(struct UTrapframe *utf)
     if (sys_page_map(envid, blkaddr, envid, blkaddr, PTE_SYSCALL) < 0) {
         panic("bg_pgfault: failed to mark disk page as non dirty\n");
     }
-
+	*/
 	// Check that the block we read was allocated. (exercise for
 	// the reader: why do we do this *after* reading the block
 	// in?)
